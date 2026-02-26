@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNIT - EERR Historicos Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0a0c10;--s1:#12151e;--s2:#1a1e2e;--s3:#232940;--bd:#2c3350;
+  --t1:#eaecf5;--t2:#8890b0;--t3:#555d80;
+  --acc:#7c6bf0;--acc2:#a99ff5;--g:#34d399;--gd:rgba(52,211,153,.12);
+  --r:#f87171;--rd:rgba(248,113,113,.12);--o:#fbbf24;--od:rgba(251,191,36,.12);
+  --b:#60a5fa;--bd2:rgba(96,165,250,.12);--p:#c084fc;--pk:#f472b6;--tl:#2dd4bf;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--t1);line-height:1.5}
+.hdr{background:linear-gradient(135deg,var(--s1),var(--s2));border-bottom:1px solid var(--bd);padding:24px 40px;display:flex;align-items:flex-end;justify-content:space-between}
+.hdr h1{font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--acc2),var(--g));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr .sub{color:var(--t2);font-size:12px;margin-top:4px}
+.hdr .badge{background:var(--s3);border:1px solid var(--bd);border-radius:8px;padding:6px 14px;font-size:11px;color:var(--t2)}
+.wrap{max-width:1480px;margin:0 auto;padding:24px 40px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
+.kpi:nth-child(1)::before{background:var(--acc)}.kpi:nth-child(2)::before{background:var(--g)}
+.kpi:nth-child(3)::before{background:var(--o)}.kpi:nth-child(4)::before{background:var(--b)}
+.kpi:nth-child(5)::before{background:var(--pk)}.kpi:nth-child(6)::before{background:var(--tl)}
+.kpi-l{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-v{font-size:24px;font-weight:700}.kpi-s{font-size:10px;color:var(--t2);margin-top:3px}
+.kpi-delta{font-size:11px;font-weight:600;margin-top:4px}
+.up{color:var(--g)}.dn{color:var(--r)}
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:4px;width:fit-content}
+.tab{padding:8px 20px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;color:var(--t2);border:none;background:transparent;transition:.2s}
+.tab:hover{color:var(--t1);background:var(--s2)}.tab.on{background:var(--acc);color:#fff}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.card-t{font-size:13px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.ch{position:relative;height:280px}.ch-t{position:relative;height:340px}.ch-s{position:relative;height:220px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--t2);border-bottom:1px solid var(--bd);background:var(--s1);position:sticky;top:0}
+th.r,td.r{text-align:right}
+td{padding:8px 10px;border-bottom:1px solid rgba(44,51,80,.4)}
+tr:hover td{background:rgba(124,107,240,.04)}
+.nm{font-weight:500}
+.pnl{display:none}.pnl.on{display:block}
+.fw{margin-bottom:20px}
+.pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600}
+.pill-g{background:var(--gd);color:var(--g)}.pill-r{background:var(--rd);color:var(--r)}
+.pill-o{background:var(--od);color:var(--o)}.pill-b{background:var(--bd2);color:var(--b)}
+.insight{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:12px;font-size:12px;line-height:1.6}
+.insight strong{color:var(--acc2)}
+.tbl-s{max-height:450px;overflow-y:auto}
+.tbl-s::-webkit-scrollbar{width:5px}.tbl-s::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.ft{margin-top:32px;padding:16px 0;border-top:1px solid var(--bd);text-align:center;color:var(--t3);font-size:10px}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.g2,.g3{grid-template-columns:1fr}.wrap{padding:16px 20px}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div><h1>UNIT - Estados de Resultados Historicos</h1><div class="sub">Analisis financiero 2020-2025 &middot; EERR historicos UNIT.xlsx</div></div>
+  <div class="badge">Cifras en CLP</div>
+</div>
+<div class="wrap">
+<!-- KPIs -->
+<div class="kpis">
+  <div class="kpi"><div class="kpi-l">Facturacion FY25</div><div class="kpi-v">$1.427M</div><div class="kpi-s">CLP millones</div><div class="kpi-delta up">+79.5% YoY</div></div>
+  <div class="kpi"><div class="kpi-l">EBITDA FY25</div><div class="kpi-v">$343M</div><div class="kpi-s">Margen 24.0%</div><div class="kpi-delta up">+65.9% YoY</div></div>
+  <div class="kpi"><div class="kpi-l">Utilidad Neta FY25</div><div class="kpi-v">$276M</div><div class="kpi-s">Margen 19.3%</div><div class="kpi-delta up">+65.2% YoY</div></div>
+  <div class="kpi"><div class="kpi-l">Margen Contribucion</div><div class="kpi-v">40.4%</div><div class="kpi-s">$577M bruto</div><div class="kpi-delta dn">vs 54.1% FY24</div></div>
+  <div class="kpi"><div class="kpi-l">Costos Directos FY25</div><div class="kpi-v">$851M</div><div class="kpi-s">59.6% de ingresos</div><div class="kpi-delta dn">vs 46.0% FY24</div></div>
+  <div class="kpi"><div class="kpi-l">CAGR 2020-25</div><div class="kpi-v">51.6%</div><div class="kpi-s">5 anos crecimiento</div><div class="kpi-delta up">x8 desde 2020</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="sw('ov')">Vista General</button>
+  <button class="tab" onclick="sw('rev')">Facturacion</button>
+  <button class="tab" onclick="sw('cost')">Costos & Margenes</button>
+  <button class="tab" onclick="sw('pnl')">P&L Detallado</button>
+  <button class="tab" onclick="sw('ins')">Insights</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="p-ov" class="pnl on">
+<div class="g2">
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Facturacion Anual (CLP M)</div><div class="ch-t"><canvas id="cRev"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--g)"></span>EBITDA & Utilidad Neta (CLP M)</div><div class="ch-t"><canvas id="cProfit"></canvas></div></div>
+</div>
+<div class="g3">
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--o)"></span>Margenes Historicos (%)</div><div class="ch"><canvas id="cMargins"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--pk)"></span>Crecimiento YoY (%)</div><div class="ch"><canvas id="cYoy"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--b)"></span>Estructura de Costos FY25</div><div class="ch"><canvas id="cCostPie"></canvas></div></div>
+</div>
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--tl)"></span>Resumen Financiero Anual (CLP millones)</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Metrica</th><th class="r">FY20</th><th class="r">FY21</th><th class="r">FY22</th><th class="r">FY23</th><th class="r">FY24</th><th class="r">FY25</th></tr></thead>
+    <tbody>
+      <tr><td class="nm">Ingresos</td><td class="r">179</td><td class="r">1,000</td><td class="r">593</td><td class="r">644</td><td class="r">795</td><td class="r" style="font-weight:700;color:var(--g)">1,427</td></tr>
+      <tr><td class="nm">Costos Directos</td><td class="r">-153</td><td class="r">-740</td><td class="r">-53</td><td class="r">-407</td><td class="r">-365</td><td class="r">-851</td></tr>
+      <tr><td class="nm">Margen Contribucion</td><td class="r">25</td><td class="r">260</td><td class="r">-11</td><td class="r">236</td><td class="r">430</td><td class="r">577</td></tr>
+      <tr><td class="nm">% Margen Contrib.</td><td class="r">14%</td><td class="r">26%</td><td class="r">-26%</td><td class="r">37%</td><td class="r">54%</td><td class="r">40%</td></tr>
+      <tr><td class="nm">Gastos Adm & Ventas</td><td class="r">-57</td><td class="r">-124</td><td class="r">-15</td><td class="r">-358</td><td class="r">-221</td><td class="r">-155</td></tr>
+      <tr><td class="nm">EBITDA</td><td class="r">-32</td><td class="r">126</td><td class="r">-25</td><td class="r">-2</td><td class="r">207</td><td class="r" style="font-weight:700;color:var(--g)">343</td></tr>
+      <tr><td class="nm">% EBITDA</td><td class="r">-18%</td><td class="r">13%</td><td class="r">-60%</td><td class="r">0%</td><td class="r">26%</td><td class="r" style="font-weight:700">24%</td></tr>
+      <tr><td class="nm">Utilidad Neta</td><td class="r">-30</td><td class="r">115</td><td class="r">-29</td><td class="r">0</td><td class="r">167</td><td class="r" style="font-weight:700;color:var(--g)">276</td></tr>
+      <tr><td class="nm">% Utilidad Neta</td><td class="r">-17%</td><td class="r">12%</td><td class="r">-68%</td><td class="r">0%</td><td class="r">21%</td><td class="r" style="font-weight:700">19%</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- REVENUE -->
+<div id="p-rev" class="pnl">
+<div class="g2">
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Facturacion Mensual FY25 (CLP M)</div><div class="ch-t"><canvas id="cRevMonth25"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--b)"></span>Facturacion Mensual FY24 (CLP M)</div><div class="ch-t"><canvas id="cRevMonth24"></canvas></div></div>
+</div>
+<div class="g2">
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--g)"></span>Comparativo Trimestral FY25 (CLP M)</div><div class="ch"><canvas id="cQtr"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--o)"></span>Facturacion Acumulada Anual</div><div class="ch"><canvas id="cCumul"></canvas></div></div>
+</div>
+</div>
+
+<!-- COSTS -->
+<div id="p-cost" class="pnl">
+<div class="g2">
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--r)"></span>Desglose Costos Directos FY25 (CLP M)</div><div class="ch-t"><canvas id="cCostBar"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--o)"></span>Desglose Gastos Adm & Ventas FY25</div><div class="ch-t"><canvas id="cGavBar"></canvas></div></div>
+</div>
+<div class="g2">
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--pk)"></span>Evolucion Margenes (%)</div><div class="ch"><canvas id="cMargins2"></canvas></div></div>
+  <div class="card"><div class="card-t"><span class="dot" style="background:var(--tl)"></span>Costos Directos como % Ingresos</div><div class="ch"><canvas id="cCostPct"></canvas></div></div>
+</div>
+</div>
+
+<!-- P&L -->
+<div id="p-pnl" class="pnl">
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Estado de Resultados FY25 - Mensual (CLP)</div>
+  <div class="tbl-s" style="max-height:600px">
+  <table id="tPnl">
+    <thead><tr><th>Concepto</th><th class="r">Ene</th><th class="r">Feb</th><th class="r">Mar</th><th class="r">Abr</th><th class="r">May</th><th class="r">Jun</th><th class="r">Jul</th><th class="r">Ago</th><th class="r">Sep</th><th class="r">Oct</th><th class="r">Nov</th><th class="r">Dic</th><th class="r" style="color:var(--g)">FY25</th></tr></thead>
+    <tbody id="tPnlBody"></tbody>
+  </table>
+  </div>
+</div>
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--g)"></span>Estado de Resultados FY25 - Trimestral (CLP)</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Concepto</th><th class="r">Q1</th><th class="r">%</th><th class="r">Q2</th><th class="r">%</th><th class="r">Q3</th><th class="r">%</th><th class="r">Q4</th><th class="r">%</th><th class="r" style="color:var(--g)">FY25</th><th class="r">%</th></tr></thead>
+    <tbody id="tQtrBody"></tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<!-- INSIGHTS -->
+<div id="p-ins" class="pnl">
+<div class="g2">
+<div>
+  <div class="card-t" style="margin-bottom:12px"><span class="dot" style="background:var(--g)"></span>Tendencias Positivas</div>
+  <div class="insight"><strong>Crecimiento explosivo FY25:</strong> Ingresos crecieron +79.5% YoY ($795M &rarr; $1,427M), el mayor salto absoluto en la historia de UNIT. La facturacion se multiplico x8 desde 2020.</div>
+  <div class="insight"><strong>EBITDA record:</strong> $343M con margen 24%, despues de un FY23 practicamente break-even. Demuestra alta apalancamiento operativo.</div>
+  <div class="insight"><strong>Utilidad Neta robusta:</strong> $276M (19.3% margen). Primera vez que la utilidad neta supera $200M, consolidando rentabilidad tras anos volatiles.</div>
+  <div class="insight"><strong>GAV bajo control:</strong> Gastos de Adm & Ventas bajaron de $221M (FY24) a $155M (FY25), reduciendo de 27.8% a 10.9% de ingresos. Fuerte disciplina de gastos.</div>
+  <div class="insight"><strong>Q2 fue el mejor trimestre:</strong> $528M en ingresos (37% del ano), $214M en EBITDA (41% margen). Concentracion de proyectos grandes.</div>
+</div>
+<div>
+  <div class="card-t" style="margin-bottom:12px"><span class="dot" style="background:var(--r)"></span>Riesgos y Alertas</div>
+  <div class="insight"><strong>Margen de contribucion cayo:</strong> De 54.1% (FY24) a 40.4% (FY25). Los costos directos crecieron mas rapido que los ingresos, pasando de 46% a 59.6% de las ventas.</div>
+  <div class="insight"><strong>Costos de terceros se dispararon:</strong> $157M en FY25 vs $20M en FY24 (x8). Fuerte dependencia de desarrollos y servicios externos.</div>
+  <div class="insight"><strong>Viajes significativos:</strong> $127M en gastos de viajes (8.9% ingresos), reflejando modelo de operacion presencial/misiones internacionales.</div>
+  <div class="insight"><strong>Estacionalidad marcada:</strong> Ene/Feb FY25 tuvieron facturacion minima ($31M y $0.6M). Alto riesgo de cash flow en Q1. Q3 tuvo EBITDA de solo 3%.</div>
+  <div class="insight"><strong>Volatilidad historica:</strong> UNIT ha alternado entre anos de perdida (FY20: -$30M, FY22: -$29M) y ganancia. El modelo depende fuertemente del pipeline de proyectos.</div>
+  <div class="insight"><strong>Diferencia de cambio:</strong> Perdida de $30M por diferencia de cambio en FY25, indicando exposicion a moneda extranjera sin cobertura.</div>
+</div>
+</div>
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--o)"></span>Metricas Clave Comparativas</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>KPI</th><th class="r">FY21</th><th class="r">FY22</th><th class="r">FY23</th><th class="r">FY24</th><th class="r">FY25</th><th>Tendencia</th></tr></thead>
+    <tbody>
+      <tr><td class="nm">Ingresos (CLP M)</td><td class="r">1,000</td><td class="r">593</td><td class="r">644</td><td class="r">795</td><td class="r" style="font-weight:700">1,427</td><td><span class="pill pill-g">Maximo historico</span></td></tr>
+      <tr><td class="nm">Crecimiento YoY</td><td class="r">+459%</td><td class="r">-41%</td><td class="r">+9%</td><td class="r">+24%</td><td class="r" style="font-weight:700">+80%</td><td><span class="pill pill-g">Acelerando</span></td></tr>
+      <tr><td class="nm">Margen Contribucion</td><td class="r">26%</td><td class="r">-26%</td><td class="r">37%</td><td class="r">54%</td><td class="r">40%</td><td><span class="pill pill-o">Comprimido</span></td></tr>
+      <tr><td class="nm">EBITDA Margen</td><td class="r">13%</td><td class="r">-60%</td><td class="r">0%</td><td class="r">26%</td><td class="r" style="font-weight:700">24%</td><td><span class="pill pill-b">Estable</span></td></tr>
+      <tr><td class="nm">Costos Directos / Ing.</td><td class="r">74%</td><td class="r">126%</td><td class="r">63%</td><td class="r">46%</td><td class="r">60%</td><td><span class="pill pill-r">Subiendo</span></td></tr>
+      <tr><td class="nm">GAV / Ingresos</td><td class="r">12%</td><td class="r">35%</td><td class="r">56%</td><td class="r">28%</td><td class="r" style="font-weight:700">11%</td><td><span class="pill pill-g">Minimo historico</span></td></tr>
+      <tr><td class="nm">Utilidad Neta Margen</td><td class="r">12%</td><td class="r">-68%</td><td class="r">0%</td><td class="r">21%</td><td class="r">19%</td><td><span class="pill pill-b">Estable</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<div class="ft">UNIT - Dashboard EERR Historicos &middot; Fuente: EERR historicos UNIT.xlsx &middot; Cifras en CLP pesos chilenos</div>
+</div>
+
+<script>
+const M=1e6;
+const fmt=v=>{if(Math.abs(v)>=1e3)return(v/1e3).toFixed(0)+'B';return v.toFixed(0)+'M'};
+const fmtS=v=>(v/M).toFixed(0);
+const years=['FY20','FY21','FY22','FY23','FY24','FY25'];
+const rev=[179,1000,593,644,795,1427];
+const cd=[-153,-740,-53,-407,-365,-851];
+const mc=[25,260,-11,236,430,577];
+const gav=[-57,-124,-15,-358,-221,-155];
+const ebitda=[-32,126,-25,-2,207,343];
+const neta=[-30,115,-29,0,167,276];
+const mcPct=[14,26,-26,37,54,40];
+const ebitdaPct=[-18,13,-60,0,26,24];
+const netaPct=[-17,12,-68,0,21,19];
+const yoy=[0,459,-41,9,24,80];
+
+// Monthly 2025
+const rev25m=[30.8,0.6,206,230.5,183.1,114.8,98.8,97.3,97.4,135.5,110.8,121.7];
+const rev24m=[24.9,41.4,16.4,60.9,32.8,55.6,62.6,79.2,84.6,133.2,121.7,81.8];
+const months=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+// Quarterly 2025
+const q25rev=[237,528,294,368];const q25ebitda=[76,214,10,43];
+const q25mc=[123,258,55,141];const q25gav=[-40,-33,-37,-45];
+
+// Cost details FY25 (CLP M)
+const costLabels=['Consultor Socios','Consultor Staff','Consultor Ext. A','Consultor Ext. B','Consultor Ext. C','Comisiones/Bonif.','Terceros/Desarr.','Sist. Computacional','Viajes'];
+const costVals=[131,36,163,49,3,159,157,27,127];
+const gavLabels=['Remun. Admin','Remun. Ventas','Estrategia','HH Residuales','Arriendo','Asesoria Cont/Trib','Gastos Legales','Otros Svcs Grales'];
+const gavVals=[25,23,11,31,11,26,18,10];
+
+const defs={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8890b0',font:{size:10}}}},scales:{x:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}}}};
+const noLeg={...defs,plugins:{...defs.plugins,legend:{display:false}}};
+
+function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on')}
+
+function init(){
+  // Revenue bar
+  new Chart(document.getElementById('cRev'),{type:'bar',data:{labels:years,datasets:[{label:'Ingresos',data:rev,backgroundColor:rev.map((_,i)=>i===5?'#7c6bf0':'rgba(124,107,240,.4)'),borderRadius:6,borderColor:'#7c6bf0',borderWidth:1}]},options:{...noLeg,scales:{...noLeg.scales,y:{...noLeg.scales.y,ticks:{...noLeg.scales.y.ticks,callback:v=>v+'M'}}}}});
+
+  // EBITDA + Net Income
+  new Chart(document.getElementById('cProfit'),{type:'bar',data:{labels:years,datasets:[{label:'EBITDA',data:ebitda,backgroundColor:'rgba(52,211,153,.6)',borderColor:'#34d399',borderWidth:1,borderRadius:4},{label:'Utilidad Neta',data:neta,backgroundColor:'rgba(96,165,250,.6)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}}}});
+
+  // Margins line
+  new Chart(document.getElementById('cMargins'),{type:'line',data:{labels:years,datasets:[{label:'Margen Contrib.',data:mcPct,borderColor:'#fbbf24',backgroundColor:'rgba(251,191,36,.1)',tension:.3,fill:true},{label:'EBITDA %',data:ebitdaPct,borderColor:'#34d399',tension:.3},{label:'Utilidad Neta %',data:netaPct,borderColor:'#60a5fa',tension:.3}]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+  // YoY
+  new Chart(document.getElementById('cYoy'),{type:'bar',data:{labels:years.slice(1),datasets:[{label:'Crec. YoY',data:yoy.slice(1),backgroundColor:yoy.slice(1).map(v=>v>=0?'rgba(52,211,153,.6)':'rgba(248,113,113,.6)'),borderColor:yoy.slice(1).map(v=>v>=0?'#34d399':'#f87171'),borderWidth:1,borderRadius:4}]},options:{...noLeg,scales:{...noLeg.scales,y:{...noLeg.scales.y,ticks:{...noLeg.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+  // Cost pie FY25
+  const costColors=['#7c6bf0','#a99ff5','#60a5fa','#34d399','#2dd4bf','#fbbf24','#f87171','#f472b6','#c084fc'];
+  new Chart(document.getElementById('cCostPie'),{type:'doughnut',data:{labels:costLabels,datasets:[{data:costVals,backgroundColor:costColors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8890b0',font:{size:9},padding:8}}}}});
+
+  // Monthly FY25
+  new Chart(document.getElementById('cRevMonth25'),{type:'bar',data:{labels:months,datasets:[{label:'Ingresos M',data:rev25m,backgroundColor:'rgba(124,107,240,.5)',borderColor:'#7c6bf0',borderWidth:1,borderRadius:4}]},options:{...noLeg,scales:{...noLeg.scales,y:{...noLeg.scales.y,ticks:{...noLeg.scales.y.ticks,callback:v=>v+'M'}}}}});
+
+  // Monthly FY24
+  new Chart(document.getElementById('cRevMonth24'),{type:'bar',data:{labels:months,datasets:[{label:'Ingresos M',data:rev24m,backgroundColor:'rgba(96,165,250,.5)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}]},options:{...noLeg,scales:{...noLeg.scales,y:{...noLeg.scales.y,ticks:{...noLeg.scales.y.ticks,callback:v=>v+'M'}}}}});
+
+  // Quarterly
+  new Chart(document.getElementById('cQtr'),{type:'bar',data:{labels:['Q1','Q2','Q3','Q4'],datasets:[{label:'Ingresos',data:q25rev,backgroundColor:'rgba(124,107,240,.5)',borderRadius:4},{label:'Margen Contrib.',data:q25mc,backgroundColor:'rgba(52,211,153,.5)',borderRadius:4},{label:'EBITDA',data:q25ebitda,backgroundColor:'rgba(251,191,36,.5)',borderRadius:4}]},options:defs});
+
+  // Cumulative
+  const cum25=[],cum24=[];let s25=0,s24=0;
+  rev25m.forEach(v=>{s25+=v;cum25.push(Math.round(s25))});
+  rev24m.forEach(v=>{s24+=v;cum24.push(Math.round(s24))});
+  new Chart(document.getElementById('cCumul'),{type:'line',data:{labels:months,datasets:[{label:'FY25',data:cum25,borderColor:'#7c6bf0',borderWidth:2,tension:.3},{label:'FY24',data:cum24,borderColor:'#60a5fa',borderWidth:2,borderDash:[5,5],tension:.3}]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}}}});
+
+  // Cost bar FY25
+  new Chart(document.getElementById('cCostBar'),{type:'bar',data:{labels:costLabels,datasets:[{data:costVals,backgroundColor:costColors,borderRadius:4}]},options:{...noLeg,indexAxis:'y',scales:{x:{ticks:{color:'#8890b0',callback:v=>v+'M'},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{display:false}}}}});
+
+  // GAV bar FY25
+  const gavColors=['#f87171','#f472b6','#c084fc','#a99ff5','#60a5fa','#34d399','#fbbf24','#2dd4bf'];
+  new Chart(document.getElementById('cGavBar'),{type:'bar',data:{labels:gavLabels,datasets:[{data:gavVals,backgroundColor:gavColors,borderRadius:4}]},options:{...noLeg,indexAxis:'y',scales:{x:{ticks:{color:'#8890b0',callback:v=>v+'M'},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{display:false}}}}});
+
+  // Margins 2
+  new Chart(document.getElementById('cMargins2'),{type:'line',data:{labels:years,datasets:[{label:'Margen Contrib.',data:mcPct,borderColor:'#fbbf24',tension:.3,pointRadius:4},{label:'EBITDA',data:ebitdaPct,borderColor:'#34d399',tension:.3,pointRadius:4},{label:'Ut. Neta',data:netaPct,borderColor:'#60a5fa',tension:.3,pointRadius:4},{label:'GAV/Ing',data:[32,12,35,56,28,11].map(v=>-v),borderColor:'#f87171',borderDash:[4,4],tension:.3,pointRadius:3}]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+  // Cost % of revenue
+  new Chart(document.getElementById('cCostPct'),{type:'bar',data:{labels:years,datasets:[{label:'Costos Dir. %',data:[86,74,126,63,46,60],backgroundColor:'rgba(248,113,113,.5)',borderColor:'#f87171',borderWidth:1,borderRadius:4},{label:'GAV %',data:[32,12,35,56,28,11],backgroundColor:'rgba(96,165,250,.5)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}]},options:{...defs,scales:{...defs.scales,x:{...defs.scales.x,stacked:false},y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+  buildPnl();
+  buildQtr();
+}
+
+function buildPnl(){
+  const data=[
+    {n:'Ingresos',v:[30849,576,206021,230484,183053,114754,98833,97295,97404,135550,110827,121695,1427339],h:true,c:'var(--g)'},
+    {n:'Costos Directos',v:[-36811,-28345,-49045,-98563,-81998,-89814,-99293,-61164,-78153,-78958,-82892,-65629,-850665],h:false},
+    {n:'  Consul. Socios',v:[-1832,-10605,-12057,-12265,-8973,-11170,-13627,-10168,-12211,-14596,-11234,-12034,-130771],h:false},
+    {n:'  Consul. Staff',v:[-1954,-2213,-3752,-2360,-2120,-2485,-2669,-1416,-2554,-5193,-4702,-4244,-35662],h:false},
+    {n:'  Consul. Ext. A',v:[-6210,-5645,-9355,-13913,-16013,-21233,-28027,-12436,-7760,-13802,-18987,-9428,-162811],h:false},
+    {n:'  Comisiones/Bonif',v:[-19547,-3000,-5372,-15643,-14883,-13410,-12446,-12392,-12392,-12392,-12392,-25115,-158984],h:false},
+    {n:'  Terceros/Desarr.',v:[0,0,-6494,-33799,-18846,-26815,-28976,-11081,-15008,-14463,-1212,-67,-156760],h:false},
+    {n:'  Viajes',v:[-5516,-5421,-6644,-18622,-5652,-8525,-6656,-8097,-19372,-13405,-23528,-5533,-126973],h:false},
+    {n:'Margen Contribucion',v:[-5962,-27769,156975,131921,101055,24940,-461,36131,19251,56591,27935,56066,576674],h:true,c:'var(--o)'},
+    {n:'GAV',v:[-18776,-8913,-12459,-9167,-14332,-9236,-8132,-15958,-13019,-7030,-19941,-18073,-155036],h:false},
+    {n:'Inversion',v:[-1239,0,-954,-834,-6179,-3668,-1785,-7117,-5863,-8063,-14012,-2746,-52459],h:false},
+    {n:'EBITDA',v:[-25980,-38077,140120,122328,82635,9395,-1928,13189,-1197,31338,-11644,23042,343218],h:true,c:'var(--acc2)'},
+    {n:'Utilidad Neta',v:[-28584,-40901,137615,119903,80222,6870,-4170,10449,-3439,29007,-14193,-17217,275562],h:true,c:'var(--b)'}
+  ];
+  const tb=document.getElementById('tPnlBody');
+  data.forEach(r=>{
+    const tr=document.createElement('tr');
+    if(r.h)tr.style.borderTop='2px solid var(--bd)';
+    let html=`<td class="nm" style="${r.h?'font-weight:700;color:'+(r.c||'var(--t1)'):'color:var(--t2)'}">${r.n}</td>`;
+    r.v.forEach((v,i)=>{
+      const s=i===12?'font-weight:700;':'';
+      const col=v<0?'color:var(--r)':v>0&&r.h?'color:var(--g)':'';
+      html+=`<td class="r" style="${s}${col}">${v===0?'-':((v<0?'':'')+Math.round(v/1000)+'K')}</td>`;
+    });
+    tr.innerHTML=html;tb.appendChild(tr);
+  });
+}
+
+function buildQtr(){
+  const data=[
+    {n:'Ingresos',q:[237445,528291,293532,368071],pq:[1,1,1,1],fy:1427339,pfy:1,h:true,c:'var(--g)'},
+    {n:'Costos Directos',q:[-114201,-270376,-238610,-227479],pq:[-.48,-.51,-.81,-.62],fy:-850665,pfy:-.596,h:false},
+    {n:'Margen Contribucion',q:[123244,257916,54921,140592],pq:[.52,.49,.19,.38],fy:576674,pfy:.404,h:true,c:'var(--o)'},
+    {n:'GAV',q:[-40148,-32735,-37109,-45044],pq:[-.17,-.06,-.13,-.12],fy:-155036,pfy:-.109,h:false},
+    {n:'EBITDA',q:[76062,214357,10064,42736],pq:[.32,.41,.03,.12],fy:343218,pfy:.24,h:true,c:'var(--acc2)'},
+  ];
+  const tb=document.getElementById('tQtrBody');
+  data.forEach(r=>{
+    const tr=document.createElement('tr');
+    if(r.h)tr.style.borderTop='2px solid var(--bd)';
+    let html=`<td class="nm" style="${r.h?'font-weight:700;color:'+(r.c||''):'color:var(--t2)'}">${r.n}</td>`;
+    for(let i=0;i<4;i++){
+      const v=r.q[i];const p=r.pq[i];
+      html+=`<td class="r" style="${v<0?'color:var(--r)':''}">${Math.round(v/1000)}K</td>`;
+      html+=`<td class="r" style="color:var(--t2)">${(p*100).toFixed(0)}%</td>`;
+    }
+    html+=`<td class="r" style="font-weight:700;${r.fy>0?'color:var(--g)':'color:var(--r)'}">${Math.round(r.fy/1000)}K</td>`;
+    html+=`<td class="r" style="color:var(--t2)">${(r.pfy*100).toFixed(0)}%</td>`;
+    tr.innerHTML=html;tb.appendChild(tr);
+  });
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
