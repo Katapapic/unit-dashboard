@@ -426,7 +426,7 @@ const gavVals=[25,23,11,31,11,26,18,10];
 const defs={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8890b0',font:{size:10}}}},scales:{x:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}}}};
 const noLeg={...defs,plugins:{...defs.plugins,legend:{display:false}}};
 
-function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on')}
+function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj()}
 
 function init(){
   // Revenue bar
@@ -472,17 +472,6 @@ function init(){
 
   // Cost % of revenue
   new Chart(document.getElementById('cCostPct'),{type:'bar',data:{labels:years,datasets:[{label:'Costos Dir. %',data:[86,74,126,63,46,60],backgroundColor:'rgba(248,113,113,.5)',borderColor:'#f87171',borderWidth:1,borderRadius:4},{label:'GAV %',data:[32,12,35,56,28,11],backgroundColor:'rgba(96,165,250,.5)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}]},options:{...defs,scales:{...defs.scales,x:{...defs.scales.x,stacked:false},y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'%'}}}}});
-
-  // Projection chart
-  const projEl=document.getElementById('cProj');
-  if(projEl){
-    const yrsP=['FY20','FY21','FY22','FY23','FY24','FY25','FY26 (T)'];
-    new Chart(projEl,{type:'bar',data:{labels:yrsP,datasets:[
-      {label:'Ingresos',data:[179,1000,593,644,795,1427,1850],backgroundColor:[...Array(6).fill('rgba(124,107,240,.5)'),'rgba(124,107,240,.25)'],borderColor:[...Array(6).fill('#7c6bf0'),'#7c6bf0'],borderWidth:1,borderRadius:6,borderDash:undefined},
-      {label:'EBITDA',data:[-32,126,-25,-2,207,343,500],backgroundColor:[...Array(6).fill('rgba(52,211,153,.5)'),'rgba(52,211,153,.25)'],borderColor:[...Array(6).fill('#34d399'),'#34d399'],borderWidth:1,borderRadius:6},
-      {label:'Utilidad Neta',data:[-30,115,-29,0,167,276,400],backgroundColor:[...Array(6).fill('rgba(96,165,250,.5)'),'rgba(96,165,250,.25)'],borderColor:[...Array(6).fill('#60a5fa'),'#60a5fa'],borderWidth:1,borderRadius:6}
-    ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}},plugins:{...defs.plugins,annotation:undefined}}});
-  }
 
   buildPnl();
   buildQtr();
@@ -540,6 +529,16 @@ function buildQtr(){
     html+=`<td class="r" style="color:var(--t2)">${(r.pfy*100).toFixed(0)}%</td>`;
     tr.innerHTML=html;tb.appendChild(tr);
   });
+}
+
+function initProj(){
+  window._projDone=true;
+  const yrsP=['FY20','FY21','FY22','FY23','FY24','FY25','FY26 (T)'];
+  new Chart(document.getElementById('cProj'),{type:'bar',data:{labels:yrsP,datasets:[
+    {label:'Ingresos',data:[179,1000,593,644,795,1427,1850],backgroundColor:[...Array(6).fill('rgba(124,107,240,.5)'),'rgba(124,107,240,.25)'],borderColor:[...Array(6).fill('#7c6bf0'),'#7c6bf0'],borderWidth:1,borderRadius:6},
+    {label:'EBITDA',data:[-32,126,-25,-2,207,343,500],backgroundColor:[...Array(6).fill('rgba(52,211,153,.5)'),'rgba(52,211,153,.25)'],borderColor:[...Array(6).fill('#34d399'),'#34d399'],borderWidth:1,borderRadius:6},
+    {label:'Utilidad Neta',data:[-30,115,-29,0,167,276,400],backgroundColor:[...Array(6).fill('rgba(96,165,250,.5)'),'rgba(96,165,250,.25)'],borderColor:[...Array(6).fill('#60a5fa'),'#60a5fa'],borderWidth:1,borderRadius:6}
+  ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}}}});
 }
 
 document.addEventListener('DOMContentLoaded',init);
