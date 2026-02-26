@@ -55,6 +55,33 @@ tr:hover td{background:rgba(124,107,240,.04)}
 .tbl-s{max-height:450px;overflow-y:auto}
 .tbl-s::-webkit-scrollbar{width:5px}.tbl-s::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
 .ft{margin-top:32px;padding:16px 0;border-top:1px solid var(--bd);text-align:center;color:var(--t3);font-size:10px}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.rec-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:0;overflow:hidden}
+.rec-card .rec-hdr{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px}
+.rec-card .rec-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.rec-card .rec-title{font-size:14px;font-weight:700}
+.rec-card .rec-sub{font-size:11px;color:var(--t2);margin-top:2px}
+.rec-body{padding:18px 20px}
+.rec-item{display:flex;gap:12px;margin-bottom:14px;font-size:12px;line-height:1.6}
+.rec-item:last-child{margin-bottom:0}
+.rec-num{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.rec-item strong{color:var(--t1)}
+.rec-item span{color:var(--t2)}
+.target-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.target{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:16px;text-align:center}
+.target .tval{font-size:22px;font-weight:700;margin:6px 0 2px}
+.target .tlbl{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.4px}
+.target .tref{font-size:10px;margin-top:6px}
+.pbar{width:100%;height:8px;background:var(--s3);border-radius:4px;overflow:hidden;margin-top:8px}
+.pbar-fill{height:100%;border-radius:4px}
+.roadmap{position:relative;padding-left:28px;margin:16px 0}
+.roadmap::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--bd)}
+.rm-item{position:relative;margin-bottom:18px}
+.rm-item:last-child{margin-bottom:0}
+.rm-dot{position:absolute;left:-23px;top:4px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bd)}
+.rm-q{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.rm-txt{font-size:12px;color:var(--t2);line-height:1.5}
+.rm-txt strong{color:var(--t1)}
 @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.g2,.g3{grid-template-columns:1fr}.wrap{padding:16px 20px}}
 </style>
 </head>
@@ -80,6 +107,7 @@ tr:hover td{background:rgba(124,107,240,.04)}
   <button class="tab" onclick="sw('cost')">Costos & Margenes</button>
   <button class="tab" onclick="sw('pnl')">P&L Detallado</button>
   <button class="tab" onclick="sw('ins')">Insights</button>
+  <button class="tab" onclick="sw('str')">Estrategia 2026</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -200,6 +228,167 @@ tr:hover td{background:rgba(124,107,240,.04)}
 </div>
 </div>
 
+<!-- ESTRATEGIA 2026 -->
+<div id="p-str" class="pnl">
+
+<!-- Targets 2026 -->
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Metas Financieras 2026 - Proyecciones basadas en tendencias historicas</div></div>
+<div class="target-grid">
+  <div class="target">
+    <div class="tlbl">Facturacion Target</div>
+    <div class="tval" style="color:var(--g)">$1.850M</div>
+    <div class="tref" style="color:var(--t2)">FY25: $1.427M</div>
+    <div class="tref"><span class="pill pill-g">+30% YoY</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:77%;background:var(--g)"></div></div>
+  </div>
+  <div class="target">
+    <div class="tlbl">EBITDA Target</div>
+    <div class="tval" style="color:var(--acc2)">$500M</div>
+    <div class="tref" style="color:var(--t2)">FY25: $343M</div>
+    <div class="tref"><span class="pill pill-g">27% margen</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:69%;background:var(--acc2)"></div></div>
+  </div>
+  <div class="target">
+    <div class="tlbl">Margen Contribucion</div>
+    <div class="tval" style="color:var(--o)">48%</div>
+    <div class="tref" style="color:var(--t2)">FY25: 40.4%</div>
+    <div class="tref"><span class="pill pill-o">Recuperar +8pp</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:84%;background:var(--o)"></div></div>
+  </div>
+  <div class="target">
+    <div class="tlbl">Utilidad Neta</div>
+    <div class="tval" style="color:var(--b)">$400M</div>
+    <div class="tref" style="color:var(--t2)">FY25: $276M</div>
+    <div class="tref"><span class="pill pill-g">22% margen</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:69%;background:var(--b)"></div></div>
+  </div>
+</div>
+
+<!-- Projection Chart -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--g)"></span>Proyeccion Historica + Target 2026</div>
+  <div class="ch-t"><canvas id="cProj"></canvas></div>
+</div>
+
+<!-- Recommendation Cards -->
+<div class="rec-grid">
+  <!-- Crecimiento -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--gd);color:var(--g)">&#9650;</div>
+      <div><div class="rec-title">Estrategia de Crecimiento</div><div class="rec-sub">Acelerar ingresos sostenidamente</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">1</div>
+        <div><strong>Diversificar base de ingresos Q1:</strong> <span>FY25 mostro estacionalidad extrema (Ene $31M, Feb $0.6M vs Q2 $528M). Establecer contratos de retainer/mantenimiento para asegurar piso de $50M/mes en Q1.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">2</div>
+        <div><strong>Escalar proyectos internacionales:</strong> <span>Los viajes ($127M, 8.9% ingresos) indican operacion internacional activa. Convertir misiones puntuales en contratos recurrentes para mejorar predictibilidad.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">3</div>
+        <div><strong>Pipeline proactivo:</strong> <span>CAGR de 51.6% en 5 anos demuestra capacidad. Apuntar a +30% YoY ($1.850M) con mix de proyectos nuevos y expansion de cuentas existentes.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Eficiencia -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#9881;</div>
+      <div><div class="rec-title">Eficiencia Operacional</div><div class="rec-sub">Optimizar estructura de costos</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
+        <div><strong>Reducir dependencia de terceros:</strong> <span>Costos de terceros/desarrollo saltaron de $20M (FY24) a $157M (FY25). Internalizar capacidades clave o negociar tarifas marco para reducir a $100M max.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
+        <div><strong>Optimizar costos de consultores externos:</strong> <span>Consul. Ext. A representa $163M (19% de costos). Evaluar conversion a staff o renegociar tarifas para recuperar 5pp de margen.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
+        <div><strong>Mantener disciplina GAV:</strong> <span>GAV bajo de 28% a 11% de ingresos FY24-FY25. Mantener por debajo de 12% en FY26 ($222M max sobre $1.850M target).</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Margenes -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--bd2);color:var(--b)">&#9733;</div>
+      <div><div class="rec-title">Mejora de Margenes</div><div class="rec-sub">Recuperar margen de contribucion</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--bd2);color:var(--b)">1</div>
+        <div><strong>Recuperar Margen Contribucion a 48%:</strong> <span>Cayo de 54% (FY24) a 40% (FY25) por escalar con mas costos variables. Meta: volver a zona 48% con mejor mix de staff propio vs externos.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--bd2);color:var(--b)">2</div>
+        <div><strong>Subir EBITDA a 27%:</strong> <span>FY25 fue 24% (vs 26% FY24). Con margen contribucion mejorado y GAV controlado, apuntar a $500M EBITDA sobre $1.850M ingresos.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--bd2);color:var(--b)">3</div>
+        <div><strong>Gestionar riesgo cambiario:</strong> <span>Perdida de $30M por diferencia de cambio en FY25. Implementar politica de cobertura (forwards) para contratos en USD/MXN y proteger margenes.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Riesgos -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--rd);color:var(--r)">&#9888;</div>
+      <div><div class="rec-title">Gestion de Riesgos</div><div class="rec-sub">Mitigar vulnerabilidades criticas</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--rd);color:var(--r)">1</div>
+        <div><strong>Suavizar estacionalidad:</strong> <span>Q3 FY25 tuvo EBITDA 3% vs Q2 41%. Distribuir proyectos y staffing mas uniformemente. Meta: ningun trimestre bajo 15% EBITDA.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--rd);color:var(--r)">2</div>
+        <div><strong>Reducir concentracion de ingresos:</strong> <span>Historial volatil (FY22 -41% caida). Diversificar a 3+ sectores/clientes principales para que ningun cliente represente >25% de ingresos.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--rd);color:var(--r)">3</div>
+        <div><strong>Reserva de caja:</strong> <span>Con Q1 estructuralmente debil y costos fijos de ~$80M/mes, mantener reserva de caja de al menos 3 meses ($240M) para cubrir periodos bajos.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Roadmap -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--p)"></span>Roadmap de Implementacion 2026</div>
+  <div class="roadmap">
+    <div class="rm-item">
+      <div class="rm-dot" style="background:var(--g);border-color:var(--g)"></div>
+      <div class="rm-q" style="color:var(--g)">Q1 2026 - Fundamentar</div>
+      <div class="rm-txt"><strong>Negociar contratos de retainer</strong> con clientes clave para piso de ingresos Q1. <strong>Implementar politica de cobertura cambiaria</strong> para contratos internacionales. Revisar y renegociar tarifas de consultores externos tipo A.</div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-dot" style="background:var(--b);border-color:var(--b)"></div>
+      <div class="rm-q" style="color:var(--b)">Q2 2026 - Escalar</div>
+      <div class="rm-txt"><strong>Capitalizar estacionalidad alta</strong> (Q2 historicamente fuerte). Convertir 3+ proyectos internacionales en contratos recurrentes. <strong>Internalizar 2-3 roles</strong> de terceros de mayor costo para recuperar margen.</div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-dot" style="background:var(--o);border-color:var(--o)"></div>
+      <div class="rm-q" style="color:var(--o)">Q3 2026 - Optimizar</div>
+      <div class="rm-txt"><strong>Mejorar utilizacion Q3</strong> (historicamente debil, 3% EBITDA en FY25). Pre-vender proyectos para Jul-Sep. Revisar y ajustar estructura de comisiones/bonificaciones ($159M en FY25) para alinear con rentabilidad.</div>
+    </div>
+    <div class="rm-item">
+      <div class="rm-dot" style="background:var(--pk);border-color:var(--pk)"></div>
+      <div class="rm-q" style="color:var(--pk)">Q4 2026 - Consolidar</div>
+      <div class="rm-txt"><strong>Evaluar cumplimiento de metas anuales.</strong> Asegurar cierre de proyectos en curso y facturacion pendiente. <strong>Planificar FY27</strong> con base en resultados y lecciones 2026. Apuntar a $2.200M+ en facturacion FY27.</div>
+    </div>
+  </div>
+</div>
+</div>
+
 <div class="ft">UNIT - Dashboard EERR Historicos &middot; Fuente: EERR historicos UNIT.xlsx &middot; Cifras en CLP pesos chilenos</div>
 </div>
 
@@ -283,6 +472,17 @@ function init(){
 
   // Cost % of revenue
   new Chart(document.getElementById('cCostPct'),{type:'bar',data:{labels:years,datasets:[{label:'Costos Dir. %',data:[86,74,126,63,46,60],backgroundColor:'rgba(248,113,113,.5)',borderColor:'#f87171',borderWidth:1,borderRadius:4},{label:'GAV %',data:[32,12,35,56,28,11],backgroundColor:'rgba(96,165,250,.5)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}]},options:{...defs,scales:{...defs.scales,x:{...defs.scales.x,stacked:false},y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'%'}}}}});
+
+  // Projection chart
+  const projEl=document.getElementById('cProj');
+  if(projEl){
+    const yrsP=['FY20','FY21','FY22','FY23','FY24','FY25','FY26 (T)'];
+    new Chart(projEl,{type:'bar',data:{labels:yrsP,datasets:[
+      {label:'Ingresos',data:[179,1000,593,644,795,1427,1850],backgroundColor:[...Array(6).fill('rgba(124,107,240,.5)'),'rgba(124,107,240,.25)'],borderColor:[...Array(6).fill('#7c6bf0'),'#7c6bf0'],borderWidth:1,borderRadius:6,borderDash:undefined},
+      {label:'EBITDA',data:[-32,126,-25,-2,207,343,500],backgroundColor:[...Array(6).fill('rgba(52,211,153,.5)'),'rgba(52,211,153,.25)'],borderColor:[...Array(6).fill('#34d399'),'#34d399'],borderWidth:1,borderRadius:6},
+      {label:'Utilidad Neta',data:[-30,115,-29,0,167,276,400],backgroundColor:[...Array(6).fill('rgba(96,165,250,.5)'),'rgba(96,165,250,.25)'],borderColor:[...Array(6).fill('#60a5fa'),'#60a5fa'],borderWidth:1,borderRadius:6}
+    ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}},plugins:{...defs.plugins,annotation:undefined}}});
+  }
 
   buildPnl();
   buildQtr();
