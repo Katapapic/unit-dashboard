@@ -142,9 +142,10 @@ tr:hover td{background:rgba(124,107,240,.04)}
   <button class="tab" onclick="sw('cost')">Costos & Margenes</button>
   <button class="tab" onclick="sw('pnl')">P&L Detallado</button>
   <button class="tab" onclick="sw('ins')">Insights</button>
-  <button class="tab" onclick="sw('str')">Estrategia 2026</button>
+  <button class="tab" onclick="sw('str')">Rec. Estrategicas</button>
   <button class="tab" onclick="sw('hlth')">Salud Financiera</button>
-  <button class="tab" onclick="sw('jan26')">Enero 2026</button>
+  <button class="tab" onclick="sw('jan26')">Analisis Ene 2026</button>
+  <button class="tab" onclick="sw('tac')">Rec. Tacticas</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -265,22 +266,25 @@ tr:hover td{background:rgba(124,107,240,.04)}
 </div>
 </div>
 
-<!-- ENERO 2026 -->
+<!-- ANALISIS ENERO 2026 -->
 <div id="p-jan26" class="pnl">
 
-<!-- KPIs Enero -->
+<!-- Mensaje Directorio -->
+<div class="insight" style="border-left:3px solid var(--acc);margin-bottom:20px"><strong>Directorio Financiero - Enero 2026:</strong> "Enero fue un mes excepcional, tanto en comparacion con 2025 como frente al presupuesto 2026. El desempeno no solo supera expectativas, sino que evidencia un cambio estructural en rentabilidad y eficiencia operativa, pero es necesario confirmar repetibilidad antes de consolidar decisiones estructurales." <span style="color:var(--t3)">— DGF Consulting / MyCFO</span></div>
+
+<!-- KPIs Enero con Presupuesto -->
 <div class="kpis" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px">
-  <div class="kpi"><div class="kpi-l">Ingresos Ene 2026</div><div class="kpi-v">$262M</div><div class="kpi-s">CLP millones</div><div class="kpi-delta up">+751% vs Ene25</div></div>
-  <div class="kpi"><div class="kpi-l">EBITDA Ene 2026</div><div class="kpi-v">$160M</div><div class="kpi-s">Margen 60.8%</div><div class="kpi-delta up">Ene25: -$26M</div></div>
-  <div class="kpi"><div class="kpi-l">Utilidad Neta</div><div class="kpi-v">$157M</div><div class="kpi-s">Margen 60.0%</div><div class="kpi-delta up">Ene25: -$29M</div></div>
-  <div class="kpi"><div class="kpi-l">Margen Contribucion</div><div class="kpi-v">80.4%</div><div class="kpi-s">$211M bruto</div><div class="kpi-delta up">vs 40.4% FY25</div></div>
-  <div class="kpi"><div class="kpi-l">Costos Directos</div><div class="kpi-v">$51M</div><div class="kpi-s">19.6% de ingresos</div><div class="kpi-delta up">vs 59.6% FY25</div></div>
+  <div class="kpi"><div class="kpi-l">Ingresos Ene 2026</div><div class="kpi-v">$262M</div><div class="kpi-s">Ppto: $123M</div><div class="kpi-delta up">+113% vs Ppto</div></div>
+  <div class="kpi"><div class="kpi-l">EBITDA Ene 2026</div><div class="kpi-v">$160M</div><div class="kpi-s">Margen 60.8%</div><div class="kpi-delta up">Ppto: -$34M</div></div>
+  <div class="kpi"><div class="kpi-l">Utilidad Neta</div><div class="kpi-v">$157M</div><div class="kpi-s">Margen 60.0%</div><div class="kpi-delta up">Ppto: -$37M</div></div>
+  <div class="kpi"><div class="kpi-l">Margen Contribucion</div><div class="kpi-v">80.4%</div><div class="kpi-s">Ppto: -7%</div><div class="kpi-delta up">+87pp vs Ppto</div></div>
+  <div class="kpi"><div class="kpi-l">Liquidez (c/ Cred. LP)</div><div class="kpi-v">2.27x</div><div class="kpi-s">Dic 2025: 1.67x</div><div class="kpi-delta up">+36% mejora</div></div>
 </div>
 
-<!-- Comparativa YoY -->
+<!-- Comparativas -->
 <div class="g2">
   <div class="card">
-    <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Enero 2026 vs Enero 2025 (CLP M)</div>
+    <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Real vs Presupuesto vs Ene 2025 (CLP M)</div>
     <div class="ch-t"><canvas id="cJan26vJan25"></canvas></div>
   </div>
   <div class="card">
@@ -289,192 +293,109 @@ tr:hover td{background:rgba(124,107,240,.04)}
   </div>
 </div>
 
-<!-- Semaforos de Desempeno -->
+<!-- Triple Comparativa: YoY + vs Ppto + vs Prom -->
 <div class="hlth-grid">
   <div class="hlth-card">
     <div class="hlth-hdr">
       <div class="hlth-hdr-left">
         <div class="hlth-icon" style="background:var(--gd);color:var(--g)">&#9650;</div>
-        <div><div class="hlth-title">Indicadores vs Enero 2025</div><div class="hlth-sub">Comparacion interanual</div></div>
+        <div><div class="hlth-title">Real vs Presupuesto Ene 2026</div><div class="hlth-sub">Desviacion sobre plan aprobado por directorio</div></div>
       </div>
     </div>
     <div class="hlth-body">
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div>
-        <div class="hlth-val" style="color:var(--g)">$262M</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: $31M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +751%</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Contribucion</div></div>
-        <div class="hlth-val" style="color:var(--g)">80.4%</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -19%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +100pp</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA</div></div>
-        <div class="hlth-val" style="color:var(--g)">$160M</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -$26M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen EBITDA</div></div>
-        <div class="hlth-val" style="color:var(--g)">60.8%</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -84%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +145pp</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Utilidad Neta</div></div>
-        <div class="hlth-val" style="color:var(--g)">$157M</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -$29M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Costos Dir. / Ingresos</div></div>
-        <div class="hlth-val" style="color:var(--g)">19.6%</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: 119%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> -100pp</div></div>
-      </div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div><div class="hlth-val" style="color:var(--g)">$262M</div><div class="hlth-bm"><div class="hlth-bm-val">Ppto: $123M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +113%</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Bruto</div></div><div class="hlth-val" style="color:var(--g)">80.4%</div><div class="hlth-bm"><div class="hlth-bm-val">Ppto: -7%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +87pp</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA</div></div><div class="hlth-val" style="color:var(--g)">$160M</div><div class="hlth-bm"><div class="hlth-bm-val">Ppto: -$34M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Utilidad Neta</div></div><div class="hlth-val" style="color:var(--g)">$157M</div><div class="hlth-bm"><div class="hlth-bm-val">Ppto: -$37M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Liquidez</div></div><div class="hlth-val" style="color:var(--g)">2.27x</div><div class="hlth-bm"><div class="hlth-bm-val">Dic25: 1.67x</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +36%</div></div></div>
     </div>
   </div>
-
   <div class="hlth-card">
     <div class="hlth-hdr">
       <div class="hlth-hdr-left">
         <div class="hlth-icon" style="background:var(--bd2);color:var(--b)">&#9679;</div>
-        <div><div class="hlth-title">Indicadores vs Promedio FY25</div><div class="hlth-sub">Benchmark mensual historico</div></div>
+        <div><div class="hlth-title">Enero 2026 vs Enero 2025</div><div class="hlth-sub">Comparacion interanual</div></div>
       </div>
     </div>
     <div class="hlth-body">
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div>
-        <div class="hlth-val" style="color:var(--g)">$262M</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Prom: $119M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +121%</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Contribucion</div></div>
-        <div class="hlth-val" style="color:var(--g)">80.4%</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Prom: 40.4%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +40pp</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA</div></div>
-        <div class="hlth-val" style="color:var(--g)">$160M</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Prom: $29M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +458%</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen EBITDA</div></div>
-        <div class="hlth-val" style="color:var(--g)">60.8%</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Prom: 24.0%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +37pp</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Utilidad Neta</div></div>
-        <div class="hlth-val" style="color:var(--g)">$157M</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Prom: $23M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +585%</div></div>
-      </div>
-      <div class="hlth-row">
-        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">GAV / Ingresos</div></div>
-        <div class="hlth-val" style="color:var(--o)">17.0%</div>
-        <div class="hlth-bm"><div class="hlth-bm-val">Prom: 10.9%</div><div class="hlth-bm-tag below"><span class="hlth-bm-arrow">&#9660;</span> +6pp</div></div>
-      </div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div><div class="hlth-val" style="color:var(--g)">$262M</div><div class="hlth-bm"><div class="hlth-bm-val">Ene25: $31M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +751%</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA</div></div><div class="hlth-val" style="color:var(--g)">$160M</div><div class="hlth-bm"><div class="hlth-bm-val">Ene25: -$26M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen EBITDA</div></div><div class="hlth-val" style="color:var(--g)">60.8%</div><div class="hlth-bm"><div class="hlth-bm-val">Ene25: -84%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +145pp</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Costos Dir. / Ing.</div></div><div class="hlth-val" style="color:var(--g)">19.6%</div><div class="hlth-bm"><div class="hlth-bm-val">Ene25: 119%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> -100pp</div></div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Estacionalidad Q1</div></div><div class="hlth-val" style="color:var(--g)">Superada</div><div class="hlth-bm"><div class="hlth-bm-val">Patron roto</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Q1 record</div></div></div>
     </div>
   </div>
 </div>
 
-<!-- P&L Detallado Enero 2026 -->
+<!-- P&L con Presupuesto -->
 <div class="card fw">
-  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Estado de Resultados - Enero 2026 (CLP miles)</div>
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Estado de Resultados Enero 2026 - Real vs Presupuesto vs Ene 2025 (CLP miles)</div>
   <div class="tbl-s">
   <table>
-    <thead><tr><th>Concepto</th><th class="r">Ene 2026</th><th class="r">% Ing.</th><th class="r">Ene 2025</th><th class="r">% Ing.</th><th class="r">Variacion</th><th>Semaforo</th></tr></thead>
+    <thead><tr><th>Concepto</th><th class="r">Real Ene 26</th><th class="r">%</th><th class="r">Ppto Ene 26</th><th class="r">Desv.</th><th class="r">Ene 2025</th><th class="r">YoY</th><th>Sem.</th></tr></thead>
     <tbody>
-      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--g)">Ingresos</td><td class="r" style="font-weight:700;color:var(--g)">262,425</td><td class="r">100%</td><td class="r">30,849</td><td class="r">100%</td><td class="r" style="color:var(--g)">+751%</td><td><span class="pill pill-g">&#9650;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">Costos Directos</td><td class="r">-51,448</td><td class="r">-19.6%</td><td class="r">-36,811</td><td class="r">-119%</td><td class="r" style="color:var(--g)">+40%</td><td><span class="pill pill-g">&#9650;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">&nbsp; Labor</td><td class="r">-34,386</td><td class="r">-13.1%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">&nbsp; Misiones/Viajes</td><td class="r">-16,724</td><td class="r">-6.4%</td><td class="r">-5,516</td><td class="r">-17.9%</td><td class="r" style="color:var(--r)">+203%</td><td><span class="pill pill-o">&#9644;</span></td></tr>
-      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--o)">Margen Contribucion</td><td class="r" style="font-weight:700;color:var(--g)">210,977</td><td class="r" style="color:var(--g)">80.4%</td><td class="r" style="color:var(--r)">-5,962</td><td class="r" style="color:var(--r)">-19.3%</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">GAV</td><td class="r">-44,637</td><td class="r">-17.0%</td><td class="r">-18,776</td><td class="r">-60.9%</td><td class="r" style="color:var(--r)">+138%</td><td><span class="pill pill-o">&#9644;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">&nbsp; Comisiones/Bonif.</td><td class="r">-15,166</td><td class="r">-5.8%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">Inversion</td><td class="r">-5,074</td><td class="r">-1.9%</td><td class="r">-1,239</td><td class="r">-4.0%</td><td class="r" style="color:var(--r)">+310%</td><td><span class="pill pill-b">&#9644;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">Ing. fuera Explot.</td><td class="r" style="color:var(--g)">942</td><td class="r">0.4%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">Egresos fuera Explot.</td><td class="r" style="color:var(--r)">-7,619</td><td class="r">-2.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-o">&#9644;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">&nbsp; Dif. Cambio</td><td class="r" style="color:var(--r)">-7,617</td><td class="r">-2.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-o">&#9644;</span></td></tr>
-      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">EBITDA</td><td class="r" style="font-weight:700;color:var(--g)">159,663</td><td class="r" style="color:var(--g)">60.8%</td><td class="r" style="color:var(--r)">-25,980</td><td class="r" style="color:var(--r)">-84.2%</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
-      <tr><td class="nm" style="color:var(--t2)">IIDA</td><td class="r">-2,298</td><td class="r">-0.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
-      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--b)">Utilidad Neta</td><td class="r" style="font-weight:700;color:var(--g)">157,365</td><td class="r" style="color:var(--g)">60.0%</td><td class="r" style="color:var(--r)">-28,584</td><td class="r" style="color:var(--r)">-92.7%</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--g)">Ingresos</td><td class="r" style="font-weight:700;color:var(--g)">262,425</td><td class="r">100%</td><td class="r">123,216</td><td class="r" style="color:var(--g)">+113%</td><td class="r">30,849</td><td class="r" style="color:var(--g)">+751%</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Costos Directos</td><td class="r">-51,448</td><td class="r">-19.6%</td><td class="r">-</td><td class="r">-</td><td class="r">-36,811</td><td class="r" style="color:var(--o)">+40%</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Labor consultores</td><td class="r">-34,386</td><td class="r">-13.1%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Misiones/Viajes</td><td class="r">-16,724</td><td class="r">-6.4%</td><td class="r">-</td><td class="r">-</td><td class="r">-5,516</td><td class="r" style="color:var(--r)">+203%</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--o)">Margen Contribucion</td><td class="r" style="font-weight:700;color:var(--g)">210,977</td><td class="r" style="color:var(--g)">80.4%</td><td class="r" style="color:var(--r)">Ppto: -7%</td><td class="r" style="color:var(--g)">+87pp</td><td class="r" style="color:var(--r)">-5,962</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">GAV</td><td class="r">-44,637</td><td class="r">-17.0%</td><td class="r">-</td><td class="r">-</td><td class="r">-18,776</td><td class="r" style="color:var(--r)">+138%</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Comisiones/Bonif.</td><td class="r">-15,166</td><td class="r">-5.8%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Inversion</td><td class="r">-5,074</td><td class="r">-1.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-1,239</td><td class="r" style="color:var(--r)">+310%</td><td><span class="pill pill-b">&#9644;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Dif. Cambio</td><td class="r" style="color:var(--r)">-7,617</td><td class="r">-2.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">EBITDA</td><td class="r" style="font-weight:700;color:var(--g)">159,663</td><td class="r" style="color:var(--g)">60.8%</td><td class="r" style="color:var(--r)">-34,401</td><td class="r" style="color:var(--g)">Inversion</td><td class="r" style="color:var(--r)">-25,980</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">IIDA</td><td class="r">-2,298</td><td class="r">-0.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--b)">Utilidad Neta</td><td class="r" style="font-weight:700;color:var(--g)">157,365</td><td class="r" style="color:var(--g)">60.0%</td><td class="r" style="color:var(--r)">-36,681</td><td class="r" style="color:var(--g)">Inversion</td><td class="r" style="color:var(--r)">-28,584</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
     </tbody>
   </table>
   </div>
 </div>
 
-<!-- Estructura Costos Ene26 + Semaforos resumen -->
-<div class="g2">
+<!-- Costos + Semaforos + Flujo -->
+<div class="g3">
   <div class="card">
-    <div class="card-t"><span class="dot" style="background:var(--pk)"></span>Estructura de Costos Directos - Enero 2026</div>
+    <div class="card-t"><span class="dot" style="background:var(--pk)"></span>Costos Directos Ene 2026</div>
     <div class="ch"><canvas id="cJan26Cost"></canvas></div>
   </div>
   <div class="card">
-    <div class="card-t"><span class="dot" style="background:var(--tl)"></span>Semaforo Resumen - Enero 2026</div>
-    <div class="hlth-body" style="padding:14px 20px">
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div><div class="hlth-val" style="color:var(--g)">Excepcional</div><div class="hlth-ref" style="color:var(--g)">+751% YoY, +121% vs prom</div></div>
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Rentabilidad</div></div><div class="hlth-val" style="color:var(--g)">Excepcional</div><div class="hlth-ref" style="color:var(--g)">MC 80%, EBITDA 61%</div></div>
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Eficiencia Costos</div></div><div class="hlth-val" style="color:var(--g)">Excelente</div><div class="hlth-ref" style="color:var(--g)">CD solo 20% de ing</div></div>
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">GAV / Ingresos</div></div><div class="hlth-val" style="color:var(--o)">Atencion</div><div class="hlth-ref" style="color:var(--o)">17% vs 11% prom FY25</div></div>
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Misiones/Viajes</div></div><div class="hlth-val" style="color:var(--o)">Atencion</div><div class="hlth-ref" style="color:var(--o)">$17M, +203% vs Ene25</div></div>
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Dif. Cambio</div></div><div class="hlth-val" style="color:var(--o)">Monitorear</div><div class="hlth-ref" style="color:var(--o)">-$7.6M, 2.9% de ing</div></div>
-      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Estacionalidad Q1</div></div><div class="hlth-val" style="color:var(--g)">Superada</div><div class="hlth-ref" style="color:var(--g)">Ene26 rompe patron Q1 debil</div></div>
+    <div class="card-t"><span class="dot" style="background:var(--tl)"></span>Semaforo Desempeno</div>
+    <div class="hlth-body" style="padding:10px 16px">
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos vs Ppto</div></div><div class="hlth-val" style="color:var(--g)">+113%</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA 61%</div></div><div class="hlth-val" style="color:var(--g)">Record</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Liquidez 2.27x</div></div><div class="hlth-val" style="color:var(--g)">+36%</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Q1 debil superado</div></div><div class="hlth-val" style="color:var(--g)">Roto</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">GAV 17%</div></div><div class="hlth-val" style="color:var(--o)">vs 11%</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Dif. Cambio</div></div><div class="hlth-val" style="color:var(--o)">-$7.6M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">No extrapolable</div></div><div class="hlth-val" style="color:var(--o)">Confirmar</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--r)"></span>Alerta Flujo 2026 (PPT)</div>
+    <div class="hlth-body" style="padding:10px 16px">
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-r"></div><div class="hlth-lbl">Flujo anual c/ RAV</div></div><div class="hlth-val" style="color:var(--r)">-$83M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Flujo anual s/ RAV</div></div><div class="hlth-val" style="color:var(--g)">+$80M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-r"></div><div class="hlth-lbl">Meses flujo negativo</div></div><div class="hlth-val" style="color:var(--r)">6 de 12</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">RAV pendiente</div></div><div class="hlth-val" style="color:var(--o)">~$160M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Caja inicial 2026</div></div><div class="hlth-val">$298M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Caja proy. cierre</div></div><div class="hlth-val" style="color:var(--o)">$215M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">K de L minimo 2m</div></div><div class="hlth-val">$192-313M</div></div>
     </div>
   </div>
 </div>
 
-<!-- Recomendaciones Tacticas Febrero -->
-<div class="rec-grid">
-  <div class="rec-card">
-    <div class="rec-hdr">
-      <div class="rec-icon" style="background:var(--gd);color:var(--g)">&#9733;</div>
-      <div><div class="rec-title">Capitalizar Momentum - Feb 2026</div><div class="rec-sub">Acciones para mantener el ritmo excepcional</div></div>
-    </div>
-    <div class="rec-body">
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--gd);color:var(--g)">1</div>
-        <div><strong>Asegurar facturacion Feb >$150M:</strong> <span>Enero alcanzo $262M vs $0.6M en Feb25. Si Feb26 supera $150M, Q1 ya acumularia >$412M (vs $237M todo Q1 FY25). Priorizar cierre de hitos facturables pendientes.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--gd);color:var(--g)">2</div>
-        <div><strong>Mantener margen contribucion >70%:</strong> <span>Ene26 logro 80.4% (vs 40% FY25). Esto indica proyectos de alta rentabilidad con bajo uso de subcontratos. Proteger este mix de proyectos en febrero.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--gd);color:var(--g)">3</div>
-        <div><strong>Pipeline Q2:</strong> <span>Con el Q1 encaminado a ser record, iniciar preventa de proyectos Q2 ahora. Q2 FY25 fue el trimestre mas fuerte ($528M). Apuntar a superar ese benchmark.</span></div>
-      </div>
-    </div>
-  </div>
+<!-- Advertencia del PPT -->
+<div class="insight" style="border-left:3px solid var(--o);margin-bottom:20px"><strong>Advertencia Directorio:</strong> "Enero nos da oxigeno, debemos ver como dar continuidad. El margen es excepcional por mix y timing (facturacion vs gastos). No representa un run-rate anual. No se puede confundir un buen ano con caja estructuralmente disponible. Primero caja minima, luego estructura, finalmente retiros." <span style="color:var(--t3)">— DGF Consulting</span></div>
 
-  <div class="rec-card">
-    <div class="rec-hdr">
-      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#9888;</div>
-      <div><div class="rec-title">Puntos de Atencion - Feb 2026</div><div class="rec-sub">Corregir antes de que escalen</div></div>
-    </div>
-    <div class="rec-body">
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
-        <div><strong>Controlar GAV absoluto:</strong> <span>$44.6M en Ene26 vs $18.8M en Ene25 (+138%). El ratio 17% es aceptable con $262M de ingresos, pero si febrero cae, el GAV fijo comprime margenes. Revisar comisiones ($15.2M = 34% del GAV).</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
-        <div><strong>Gestionar viajes/misiones:</strong> <span>$16.7M en enero (6.4% de ingresos, +203% vs Ene25). Si es proporcional a proyectos internacionales activos es aceptable, pero monitorear que no supere 7% de ingresos en febrero.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
-        <div><strong>Exposicion cambiaria:</strong> <span>Perdida de $7.6M por diferencia de cambio en un solo mes (2.9% de ingresos). Activar coberturas forward para contratos en USD/MXN activos en febrero para proteger la utilidad.</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Proyeccion Q1 2026 -->
+<!-- Proyeccion Q1 -->
 <div class="card fw">
-  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Proyeccion Q1 2026 - Si febrero mantiene ritmo</div>
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Proyeccion Q1 2026 - Escenarios</div>
   <div class="tbl-s">
   <table>
-    <thead><tr><th>Escenario Feb 2026</th><th class="r">Ingresos Q1</th><th class="r">EBITDA Q1</th><th class="r">vs Q1 FY25 ($237M)</th><th>Probabilidad</th></tr></thead>
+    <thead><tr><th>Escenario Feb 2026</th><th class="r">Ing. Q1</th><th class="r">EBITDA Q1</th><th class="r">vs Q1 FY25 ($237M)</th><th class="r">vs Ppto Q1</th><th>Probabilidad</th></tr></thead>
     <tbody>
-      <tr><td class="nm" style="color:var(--r)">Conservador (Feb=$50M)</td><td class="r">$312M</td><td class="r">~$170M</td><td class="r" style="color:var(--g)">+32%</td><td><span class="pill pill-o">Si Feb cae</span></td></tr>
-      <tr><td class="nm" style="color:var(--o)">Base (Feb=$150M)</td><td class="r">$412M</td><td class="r">~$250M</td><td class="r" style="color:var(--g)">+74%</td><td><span class="pill pill-b">Probable</span></td></tr>
-      <tr><td class="nm" style="color:var(--g)">Optimista (Feb=$250M)</td><td class="r">$512M</td><td class="r">~$310M</td><td class="r" style="color:var(--g)">+116%</td><td><span class="pill pill-g">Si mantiene</span></td></tr>
+      <tr><td class="nm" style="color:var(--r)">Conservador (Feb=$50M)</td><td class="r">$312M</td><td class="r">~$170M</td><td class="r" style="color:var(--g)">+32%</td><td class="r" style="color:var(--g)">Sobre ppto</td><td><span class="pill pill-o">Baja</span></td></tr>
+      <tr><td class="nm" style="color:var(--o)">Base (Feb=$150M)</td><td class="r">$412M</td><td class="r">~$250M</td><td class="r" style="color:var(--g)">+74%</td><td class="r" style="color:var(--g)">Muy sobre</td><td><span class="pill pill-b">Probable</span></td></tr>
+      <tr><td class="nm" style="color:var(--g)">Optimista (Feb=$250M)</td><td class="r">$512M</td><td class="r">~$310M</td><td class="r" style="color:var(--g)">+116%</td><td class="r" style="color:var(--g)">Record</td><td><span class="pill pill-g">Si mantiene</span></td></tr>
     </tbody>
   </table>
   </div>
@@ -744,36 +665,39 @@ tr:hover td{background:rgba(124,107,240,.04)}
 <!-- ESTRATEGIA 2026 -->
 <div id="p-str" class="pnl">
 
-<!-- Targets 2026 -->
-<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Metas Financieras 2026 - Proyecciones basadas en tendencias historicas</div></div>
+<!-- Pregunta Estrategica Central -->
+<div class="insight" style="border-left:3px solid var(--acc);margin-bottom:20px"><strong>Pregunta Estrategica al Directorio:</strong> "Maximizar utilidad 2026 o maximizar estabilidad 2026-2028? Ambas opciones son validas, pero requieren estrategias y decisiones distintas. No se puede confundir un buen ano con caja estructuralmente disponible." <span style="color:var(--t3)">— DGF Consulting / MyCFO</span></div>
+
+<!-- Targets 2026 actualizados con contexto PPT -->
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Metas Financieras 2026 - Integra directrices PPT Directorio + tendencias historicas</div></div>
 <div class="target-grid">
   <div class="target">
     <div class="tlbl">Facturacion Target</div>
     <div class="tval" style="color:var(--g)">$1.850M</div>
-    <div class="tref" style="color:var(--t2)">FY25: $1.427M</div>
+    <div class="tref" style="color:var(--t2)">FY25: $1.427M | Ene26: $262M (14%)</div>
     <div class="tref"><span class="pill pill-g">+30% YoY</span></div>
-    <div class="pbar"><div class="pbar-fill" style="width:77%;background:var(--g)"></div></div>
+    <div class="pbar"><div class="pbar-fill" style="width:14%;background:var(--g)"></div></div>
   </div>
   <div class="target">
     <div class="tlbl">EBITDA Target</div>
     <div class="tval" style="color:var(--acc2)">$500M</div>
-    <div class="tref" style="color:var(--t2)">FY25: $343M</div>
-    <div class="tref"><span class="pill pill-g">27% margen</span></div>
-    <div class="pbar"><div class="pbar-fill" style="width:69%;background:var(--acc2)"></div></div>
+    <div class="tref" style="color:var(--t2)">FY25: $343M | Ene26: $160M (32%)</div>
+    <div class="tref"><span class="pill pill-g">27% margen min</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:32%;background:var(--acc2)"></div></div>
   </div>
   <div class="target">
-    <div class="tlbl">Margen Contribucion</div>
-    <div class="tval" style="color:var(--o)">48%</div>
-    <div class="tref" style="color:var(--t2)">FY25: 40.4%</div>
-    <div class="tref"><span class="pill pill-o">Recuperar +8pp</span></div>
-    <div class="pbar"><div class="pbar-fill" style="width:84%;background:var(--o)"></div></div>
+    <div class="tlbl">Caja Minima</div>
+    <div class="tval" style="color:var(--o)">$192-313M</div>
+    <div class="tref" style="color:var(--t2)">Capital de trabajo 2 meses (PPT)</div>
+    <div class="tref"><span class="pill pill-o">Caja hoy: $298M</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:95%;background:var(--o)"></div></div>
   </div>
   <div class="target">
-    <div class="tlbl">Utilidad Neta</div>
-    <div class="tval" style="color:var(--b)">$400M</div>
-    <div class="tref" style="color:var(--t2)">FY25: $276M</div>
-    <div class="tref"><span class="pill pill-g">22% margen</span></div>
-    <div class="pbar"><div class="pbar-fill" style="width:69%;background:var(--b)"></div></div>
+    <div class="tlbl">Retiro Max Socios</div>
+    <div class="tval" style="color:var(--b)">$80M</div>
+    <div class="tref" style="color:var(--t2)">25-30% utilidad, despues de abril</div>
+    <div class="tref"><span class="pill pill-b">Post RAV + Imp. 1a Cat.</span></div>
+    <div class="pbar"><div class="pbar-fill" style="width:0%;background:var(--b)"></div></div>
   </div>
 </div>
 
@@ -783,126 +707,312 @@ tr:hover td{background:rgba(124,107,240,.04)}
   <div class="ch-t"><canvas id="cProj"></canvas></div>
 </div>
 
-<!-- Recommendation Cards -->
+<!-- Strategic Recommendations - PPT Informed -->
 <div class="rec-grid">
-  <!-- Crecimiento -->
-  <div class="rec-card">
-    <div class="rec-hdr">
-      <div class="rec-icon" style="background:var(--gd);color:var(--g)">&#9650;</div>
-      <div><div class="rec-title">Estrategia de Crecimiento</div><div class="rec-sub">Acelerar ingresos sostenidamente</div></div>
-    </div>
-    <div class="rec-body">
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--gd);color:var(--g)">1</div>
-        <div><strong>Diversificar base de ingresos Q1:</strong> <span>FY25 mostro estacionalidad extrema (Ene $31M, Feb $0.6M vs Q2 $528M). Establecer contratos de retainer/mantenimiento para asegurar piso de $50M/mes en Q1.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--gd);color:var(--g)">2</div>
-        <div><strong>Escalar proyectos internacionales:</strong> <span>Los viajes ($127M, 8.9% ingresos) indican operacion internacional activa. Convertir misiones puntuales en contratos recurrentes para mejorar predictibilidad.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--gd);color:var(--g)">3</div>
-        <div><strong>Pipeline proactivo:</strong> <span>CAGR de 51.6% en 5 anos demuestra capacidad. Apuntar a +30% YoY ($1.850M) con mix de proyectos nuevos y expansion de cuentas existentes.</span></div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Eficiencia -->
+  <!-- 1. Politica de Retiro de Utilidades -->
   <div class="rec-card">
     <div class="rec-hdr">
-      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#9881;</div>
-      <div><div class="rec-title">Eficiencia Operacional</div><div class="rec-sub">Optimizar estructura de costos</div></div>
-    </div>
-    <div class="rec-body">
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
-        <div><strong>Reducir dependencia de terceros:</strong> <span>Costos de terceros/desarrollo saltaron de $20M (FY24) a $157M (FY25). Internalizar capacidades clave o negociar tarifas marco para reducir a $100M max.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
-        <div><strong>Optimizar costos de consultores externos:</strong> <span>Consul. Ext. A representa $163M (19% de costos). Evaluar conversion a staff o renegociar tarifas para recuperar 5pp de margen.</span></div>
-      </div>
-      <div class="rec-item">
-        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
-        <div><strong>Mantener disciplina GAV:</strong> <span>GAV bajo de 28% a 11% de ingresos FY24-FY25. Mantener por debajo de 12% en FY26 ($222M max sobre $1.850M target).</span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Margenes -->
-  <div class="rec-card">
-    <div class="rec-hdr">
-      <div class="rec-icon" style="background:var(--bd2);color:var(--b)">&#9733;</div>
-      <div><div class="rec-title">Mejora de Margenes</div><div class="rec-sub">Recuperar margen de contribucion</div></div>
+      <div class="rec-icon" style="background:var(--bd2);color:var(--b)">&#128176;</div>
+      <div><div class="rec-title">Protocolo Retiro de Utilidades</div><div class="rec-sub">Politica PPT aprobada por directorio</div></div>
     </div>
     <div class="rec-body">
       <div class="rec-item">
         <div class="rec-num" style="background:var(--bd2);color:var(--b)">1</div>
-        <div><strong>Recuperar Margen Contribucion a 48%:</strong> <span>Cayo de 54% (FY24) a 40% (FY25) por escalar con mas costos variables. Meta: volver a zona 48% con mejor mix de staff propio vs externos.</span></div>
+        <div><strong>Respetar secuencia: caja minima > estructura > retiros.</strong> <span>El directorio establecio 3 capas: primero cubrir capital de trabajo minimo ($192-313M segun escenario), luego costos fijos, finalmente considerar retiros. Enero fue excepcional pero no garantiza caja disponible.</span></div>
       </div>
       <div class="rec-item">
         <div class="rec-num" style="background:var(--bd2);color:var(--b)">2</div>
-        <div><strong>Subir EBITDA a 27%:</strong> <span>FY25 fue 24% (vs 26% FY24). Con margen contribucion mejorado y GAV controlado, apuntar a $500M EBITDA sobre $1.850M ingresos.</span></div>
+        <div><strong>Max retiro: 25-30% de utilidad, tope $80M.</strong> <span>Solo despues de abril (post RAV ~$160M + Impuesto 1a Categoria). Gatillos: EBITDA acum. >=20%, Liquidez >=1.5x, caja minima cubierta. No anticipar retiros antes de confirmar repetibilidad.</span></div>
       </div>
       <div class="rec-item">
         <div class="rec-num" style="background:var(--bd2);color:var(--b)">3</div>
-        <div><strong>Gestionar riesgo cambiario:</strong> <span>Perdida de $30M por diferencia de cambio en FY25. Implementar politica de cobertura (forwards) para contratos en USD/MXN y proteger margenes.</span></div>
+        <div><strong>Monitoreo mensual de caja vs escenarios.</strong> <span>PPT proyecta 6 de 12 meses con flujo negativo (con RAV). Caja cierre proy. $215M (desde $298M). Cada retiro debe pasar por revision formal del CFO antes de aprobacion.</span></div>
       </div>
     </div>
   </div>
 
-  <!-- Riesgos -->
+  <!-- 2. Capital de Trabajo y Flujo -->
   <div class="rec-card">
     <div class="rec-hdr">
-      <div class="rec-icon" style="background:var(--rd);color:var(--r)">&#9888;</div>
-      <div><div class="rec-title">Gestion de Riesgos</div><div class="rec-sub">Mitigar vulnerabilidades criticas</div></div>
+      <div class="rec-icon" style="background:var(--rd);color:var(--r)">&#128200;</div>
+      <div><div class="rec-title">Gestion de Capital de Trabajo</div><div class="rec-sub">Flujo de caja y liquidez — alerta PPT</div></div>
     </div>
     <div class="rec-body">
       <div class="rec-item">
         <div class="rec-num" style="background:var(--rd);color:var(--r)">1</div>
-        <div><strong>Suavizar estacionalidad:</strong> <span>Q3 FY25 tuvo EBITDA 3% vs Q2 41%. Distribuir proyectos y staffing mas uniformemente. Meta: ningun trimestre bajo 15% EBITDA.</span></div>
+        <div><strong>Mitigar impacto RAV ($160M).</strong> <span>Sin RAV el flujo 2026 es +$80M; con RAV es -$83M. Negociar fraccionamiento o aplazamiento del RAV. Evaluar linea de credito puente para meses criticos (PPT muestra 6 meses en rojo).</span></div>
       </div>
       <div class="rec-item">
         <div class="rec-num" style="background:var(--rd);color:var(--r)">2</div>
-        <div><strong>Reducir concentracion de ingresos:</strong> <span>Historial volatil (FY22 -41% caida). Diversificar a 3+ sectores/clientes principales para que ningun cliente represente >25% de ingresos.</span></div>
+        <div><strong>Aplicar politica de 3 capas para capital de trabajo.</strong> <span>Capa 1: costos fijos 2 meses ($192-313M). Capa 2: margen de seguridad 20%. Capa 3: fondo de contingencia proyectos. PPT recomienda escenario 3 como minimo ($192-288M).</span></div>
       </div>
       <div class="rec-item">
         <div class="rec-num" style="background:var(--rd);color:var(--r)">3</div>
-        <div><strong>Reserva de caja:</strong> <span>Con Q1 estructuralmente debil y costos fijos de ~$80M/mes, mantener reserva de caja de al menos 3 meses ($240M) para cubrir periodos bajos.</span></div>
+        <div><strong>Acelerar cobros y facturacion temprana.</strong> <span>Como consultora global por proyecto, optimizar ciclo de cobro: facturar hitos anticipados, reducir DSO a <45 dias, activar factoring selectivo para proyectos grandes con cobro diferido.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Modelo de Pricing y HH -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#9881;</div>
+      <div><div class="rec-title">Pricing y Control de HH</div><div class="rec-sub">KPIs PPT: tarifa minima por nivel + margen proyecto</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
+        <div><strong>Implementar pricing minimo por HH (PPT).</strong> <span>Socio: tarifa premium con margen >=50%. Senior: tarifa intermedia margen >=40%. Junior: tarifa base margen >=35%. Ningun proyecto bajo 35% margen bruto. Monitorear mensualmente desvio vs tarifa piso.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
+        <div><strong>Limitar HH socios y aumentar apalancamiento.</strong> <span>PPT identifica dependencia excesiva de HH de socios ($131M FY25, 15% de costos). Establecer tope mensual de HH por socio. Migrar ejecucion a seniors/red de consultores. Meta: ratio staff:socio >= 3:1.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
+        <div><strong>Optimizar red de consultores y proveedores.</strong> <span>Consul. Ext. A ($163M) es el mayor costo variable. Negociar tarifas marco anuales con red de consultores frecuentes. Crear pool pre-evaluado de proveedores por especialidad para reducir tiempos de staffing y mejorar margenes.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Diversificacion y FX -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--gd);color:var(--g)">&#127758;</div>
+      <div><div class="rec-title">Diversificacion y Riesgo FX</div><div class="rec-sub">Reducir concentracion + cobertura cambiaria</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">1</div>
+        <div><strong>Diversificar cartera de clientes.</strong> <span>PPT advierte concentracion de ingresos. Meta: ningun cliente >25%, ningun sector >40%. FY22 cayo -41% por dependencia. Activar desarrollo de negocios en 2-3 sectores nuevos (energia, fintech, salud).</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">2</div>
+        <div><strong>Cobertura cambiaria activa.</strong> <span>FY25: perdida $30M por dif. cambio. Ene26: -$7.6M adicional. Implementar forwards para contratos >$20M en USD/MXN/EUR. Calzar moneda de ingresos con moneda de costos de red de consultores internacionales.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">3</div>
+        <div><strong>Suavizar estacionalidad con contratos de retainer.</strong> <span>Q1 historicamente debil (Ene25 $31M, Feb25 $0.6M). Negociar 5+ contratos de advisory/retainer mensuales con clientes estrategicos para asegurar piso de $80M/mes en trimestres bajos.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Estructura Consultora Global -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:rgba(192,132,252,.12);color:var(--p)">&#127968;</div>
+      <div><div class="rec-title">Modelo Consultora Global</div><div class="rec-sub">Apalancamiento de red de consultores y proveedores</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:rgba(192,132,252,.12);color:var(--p)">1</div>
+        <div><strong>Escalar via red, no via headcount fijo.</strong> <span>Como consultora proyecto a proyecto, el modelo de crecimiento es via red de consultores (no contratacion masiva). Mantener nucleo lean de socios + seniors y escalar con pool pre-evaluado de externos por especialidad y geografia.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:rgba(192,132,252,.12);color:var(--p)">2</div>
+        <div><strong>Desarrollar capacidades de gestion de proveedores.</strong> <span>Terceros/desarrollo salto de $20M a $157M en un ano. Crear funcion de vendor management: SLAs, evaluacion trimestral, tarifas marco y clausulas de calidad para subcontratistas de la red global.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:rgba(192,132,252,.12);color:var(--p)">3</div>
+        <div><strong>Productizar servicios recurrentes.</strong> <span>Convertir entregas repetitivas en productos/plataformas propias (assessments, diagnosticos, herramientas de monitoreo). Esto genera ingresos recurrentes, reduce dependencia de HH y mejora margenes a >60%.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Gobernanza y Decision -->
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:rgba(244,114,182,.12);color:var(--pk)">&#128202;</div>
+      <div><div class="rec-title">Gobernanza Financiera</div><div class="rec-sub">Framework de decision — estabilidad vs utilidad</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:rgba(244,114,182,.12);color:var(--pk)">1</div>
+        <div><strong>Opcion A: Maximizar utilidad 2026.</strong> <span>Agresivo en pricing, minimo retiros, reinvertir en red y capacidades. Riesgo: si mercado se contrae, estructura queda expuesta. Beneficio: mayor caja para 2027, reinversion acelerada.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:rgba(244,114,182,.12);color:var(--pk)">2</div>
+        <div><strong>Opcion B: Maximizar estabilidad 2026-2028.</strong> <span>Retiros moderados ($50-80M), build de reserva de caja, diversificacion agresiva de clientes y servicios. Menor retorno inmediato pero mayor resiliencia ante volatilidad historica (FY22 cayo -41%).</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:rgba(244,114,182,.12);color:var(--pk)">3</div>
+        <div><strong>Recomendacion: opcion hibrida.</strong> <span>Priorizar estabilidad Q1-Q2 (caja minima + RAV + impuesto), luego evaluar en mayo con 5 meses reales. Si EBITDA acum. >=20% y caja > $250M, habilitar retiro parcial ($40-60M) y accelerar inversion en red.</span></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Roadmap -->
+<!-- Roadmap actualizado con contexto PPT -->
 <div class="card fw">
-  <div class="card-t"><span class="dot" style="background:var(--p)"></span>Roadmap de Implementacion 2026</div>
+  <div class="card-t"><span class="dot" style="background:var(--p)"></span>Roadmap Estrategico 2026 — Integra directrices Directorio + PPT</div>
   <div class="roadmap">
     <div class="rm-item">
       <div class="rm-dot" style="background:var(--g);border-color:var(--g)"></div>
-      <div class="rm-q" style="color:var(--g)">Q1 2026 - Fundamentar</div>
-      <div class="rm-txt"><strong>Negociar contratos de retainer</strong> con clientes clave para piso de ingresos Q1. <strong>Implementar politica de cobertura cambiaria</strong> para contratos internacionales. Revisar y renegociar tarifas de consultores externos tipo A.</div>
+      <div class="rm-q" style="color:var(--g)">Q1 2026 - Asegurar Caja y Fundamentos</div>
+      <div class="rm-txt"><strong>Priorizar flujo de caja</strong> ante 6 meses proyectados en rojo (PPT). <strong>Activar cobertura FX</strong> para contratos en moneda extranjera (-$7.6M perdida solo en enero). Implementar pricing minimo por HH y margen piso 35% por proyecto. <strong>No autorizar retiros hasta post-abril</strong> (RAV + Imp. 1a Cat.).</div>
     </div>
     <div class="rm-item">
       <div class="rm-dot" style="background:var(--b);border-color:var(--b)"></div>
-      <div class="rm-q" style="color:var(--b)">Q2 2026 - Escalar</div>
-      <div class="rm-txt"><strong>Capitalizar estacionalidad alta</strong> (Q2 historicamente fuerte). Convertir 3+ proyectos internacionales en contratos recurrentes. <strong>Internalizar 2-3 roles</strong> de terceros de mayor costo para recuperar margen.</div>
+      <div class="rm-q" style="color:var(--b)">Q2 2026 - Capitalizar y Evaluar</div>
+      <div class="rm-txt"><strong>Q2 historicamente fuerte</strong> ($528M FY25). Capitalizar estacionalidad alta. En mayo, <strong>evaluacion formal del directorio</strong>: si EBITDA acum. >=20% y caja >$250M, habilitar retiro parcial ($40-60M). Renegociar tarifas marco con top 10 consultores de la red.</div>
     </div>
     <div class="rm-item">
       <div class="rm-dot" style="background:var(--o);border-color:var(--o)"></div>
-      <div class="rm-q" style="color:var(--o)">Q3 2026 - Optimizar</div>
-      <div class="rm-txt"><strong>Mejorar utilizacion Q3</strong> (historicamente debil, 3% EBITDA en FY25). Pre-vender proyectos para Jul-Sep. Revisar y ajustar estructura de comisiones/bonificaciones ($159M en FY25) para alinear con rentabilidad.</div>
+      <div class="rm-q" style="color:var(--o)">Q3 2026 - Diversificar y Construir</div>
+      <div class="rm-txt"><strong>Q3 historicamente debil</strong> (3% EBITDA FY25). Pre-vender proyectos para Jul-Sep con descuento de volumen. <strong>Lanzar 2 servicios productizados</strong> (assessments, diagnosticos) para generar ingreso recurrente. Activar desarrollo de negocios en 2 sectores nuevos.</div>
     </div>
     <div class="rm-item">
       <div class="rm-dot" style="background:var(--pk);border-color:var(--pk)"></div>
-      <div class="rm-q" style="color:var(--pk)">Q4 2026 - Consolidar</div>
-      <div class="rm-txt"><strong>Evaluar cumplimiento de metas anuales.</strong> Asegurar cierre de proyectos en curso y facturacion pendiente. <strong>Planificar FY27</strong> con base en resultados y lecciones 2026. Apuntar a $2.200M+ en facturacion FY27.</div>
+      <div class="rm-q" style="color:var(--pk)">Q4 2026 - Consolidar y Planificar</div>
+      <div class="rm-txt"><strong>Evaluar cumplimiento de metas anuales</strong> y decision final de retiros complementarios (si caja permite). <strong>Revision 360 del modelo:</strong> red de consultores, vendor management, mix clientes/sectores. Planificar FY27 con base en 12 meses reales y lecciones aprendidas.</div>
     </div>
   </div>
 </div>
 </div>
 
-<div class="ft">UNIT - Dashboard EERR Historicos &middot; Fuente: EERR historicos UNIT.xlsx &middot; Cifras en CLP pesos chilenos</div>
+<!-- RECOMENDACIONES TACTICAS - Febrero 2026 -->
+<div id="p-tac" class="pnl">
+
+<!-- Contexto -->
+<div class="insight" style="border-left:3px solid var(--o);margin-bottom:20px"><strong>Contexto Febrero 2026:</strong> Enero fue excepcional ($262M ingresos, 61% EBITDA) pero el PPT del directorio advierte: 6 de 12 meses tendran flujo negativo, RAV de ~$160M vence pronto, y la caja proyectada cae de $298M a $215M. Estas acciones tacticas priorizan proteger la caja y confirmar la repetibilidad del desempeno de enero.</div>
+
+<!-- Prioridades Semana 1-2 -->
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--r)"></span>Acciones Urgentes - Semana 1-2 de Febrero 2026</div></div>
+<div class="rec-grid">
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--rd);color:var(--r)">&#9888;</div>
+      <div><div class="rec-title">Control GAV Inmediato</div><div class="rec-sub">GAV Ene26: $44.6M (17%) vs FY25: 11%</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--rd);color:var(--r)">1</div>
+        <div><strong>Auditar comisiones enero ($15.2M).</strong> <span>Representan 34% del GAV. Verificar que estan alineadas a facturacion real cobrada (no devengada). Si hay comisiones sobre proyectos no cobrados, diferirlas hasta cobro efectivo.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--rd);color:var(--r)">2</div>
+        <div><strong>Congelar gastos discrecionales febrero.</strong> <span>Viajes no comprometidos, eventos, suscripciones nuevas. Meta: GAV febrero <$30M (volver a 11-12% sobre ingresos estimados). Solo aprobar gastos con ROI demostrable en Q1.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--rd);color:var(--r)">3</div>
+        <div><strong>Revisar compromisos de inversion ($5M ene).</strong> <span>Inversion subio 310% YoY. Evaluar si inversiones de enero son recurrentes o puntuales. Postergar inversiones no criticas hasta confirmar flujo Q1.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#128176;</div>
+      <div><div class="rec-title">Proteccion de Caja</div><div class="rec-sub">Caja $298M, RAV pendiente ~$160M</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
+        <div><strong>Mapear vencimiento exacto del RAV.</strong> <span>~$160M de RAV impacta directamente la caja. Confirmar calendario de pagos, evaluar fraccionamiento con SII. Preparar escenario de liquidez mes a mes con y sin RAV.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
+        <div><strong>Acelerar facturacion y cobro febrero.</strong> <span>Con FY25 Feb en $0.6M (peor mes historico), el riesgo de estacionalidad es real. Facturar hitos de proyectos en curso inmediatamente. Activar cobro de cuentas por cobrar >30 dias. Meta: cobro >$100M en febrero.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
+        <div><strong>No autorizar ningun retiro de socios.</strong> <span>Por directriz del directorio (PPT): retiros solo despues de abril, post RAV + Impuesto 1a Categoria. Comunicar formalmente a socios el protocolo y timeline aprobado.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acciones Semana 2-4 -->
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--o)"></span>Acciones Operativas - Semana 2-4 de Febrero 2026</div></div>
+<div class="rec-grid">
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#9881;</div>
+      <div><div class="rec-title">Pricing y Proyectos</div><div class="rec-sub">Implementar KPIs del PPT en operacion diaria</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
+        <div><strong>Activar tarifa piso por nivel de HH.</strong> <span>Segun PPT: definir tarifa minima Socio/Senior/Junior. Rechazar propuestas bajo margen 35%. Crear tabla de pricing aprobada y distribuir al equipo comercial esta semana.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
+        <div><strong>Auditar pipeline febrero-marzo.</strong> <span>Listar todos los proyectos confirmados, probables y en negociacion. Estimar ingresos febrero con 3 escenarios: conservador $50M, base $150M, optimista $250M (como el panel de proyecciones Q1).</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
+        <div><strong>Revisar asignacion de HH socios.</strong> <span>PPT alerta sobre dependencia de HH socios ($131M FY25). Listar proyectos donde socios ejecutan y evaluar delegacion a seniors de la red. Meta: reducir HH socios 20% vs enero.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--gd);color:var(--g)">&#127758;</div>
+      <div><div class="rec-title">Cobertura y Riesgo</div><div class="rec-sub">FX, clientes, y estacionalidad</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">1</div>
+        <div><strong>Activar cobertura FX para contratos vigentes.</strong> <span>Enero perdio $7.6M por dif. cambio (2.9% de ingresos). Cotizar forwards con al menos 2 bancos para contratos en USD >$20M. Ejecutar antes de fin de febrero.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">2</div>
+        <div><strong>Mapear concentracion de ingresos enero.</strong> <span>$262M en un mes sugiere pocos proyectos grandes. Identificar top 3 clientes y su % de ingresos. Si algun cliente >30%, activar plan de diversificacion inmediato con desarrollo de negocios.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">3</div>
+        <div><strong>Preparar escenario febrero conservador.</strong> <span>FY25 febrero fue $0.6M (catastrofico). Preparar plan de contingencia si febrero 2026 cae bajo $80M: reducir compromisos de subcontratistas, postergar misiones no criticas, priorizar proyectos de alta facturacion inmediata.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard Tactico Mensual -->
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Tablero de Control Tactico - Febrero 2026</div></div>
+<div class="hlth-grid">
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--rd);color:var(--r)">&#128269;</div>
+        <div><div class="hlth-title">KPIs a Monitorear Semanalmente</div><div class="hlth-sub">Frecuencia: todos los lunes</div></div>
+      </div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-r"></div><div class="hlth-lbl">Saldo de caja</div></div><div class="hlth-val">Meta: >$250M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Facturacion acum. feb</div></div><div class="hlth-val">Meta: >$100M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Cobros efectivos feb</div></div><div class="hlth-val">Meta: >$80M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">GAV acum. feb</div></div><div class="hlth-val">Meta: <$30M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">HH socios feb</div></div><div class="hlth-val">Meta: -20% vs ene</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen proy. nuevos</div></div><div class="hlth-val">Meta: >=35%</div></div>
+    </div>
+  </div>
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--bd2);color:var(--b)">&#128197;</div>
+        <div><div class="hlth-title">Calendario de Decisiones Criticas</div><div class="hlth-sub">Hitos financieros Q1-Q2 2026</div></div>
+      </div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-r"></div><div class="hlth-lbl">Feb: Vencimiento RAV (est.)</div></div><div class="hlth-val" style="color:var(--r)">~$160M</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-r"></div><div class="hlth-lbl">Abr: Impuesto 1a Categoria</div></div><div class="hlth-val" style="color:var(--r)">Confirmar</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Abr: Revision caja post-pagos</div></div><div class="hlth-val" style="color:var(--o)">Gatillo retiros</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">May: Evaluacion directorio</div></div><div class="hlth-val" style="color:var(--o)">Decision retiro</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Jun: Revision mid-year</div></div><div class="hlth-val">Ajuste metas</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Jul: Inicio Q3 (hist. debil)</div></div><div class="hlth-val">Pre-venta activa</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Proyeccion Impacto Tactico -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--g)"></span>Impacto Estimado - Si se Ejecutan las Acciones Tacticas</div>
+  <div class="ch-t"><canvas id="cTacImpact"></canvas></div>
+</div>
+
+</div>
+
+<div class="ft">UNIT - Dashboard EERR Historicos &middot; Fuente: EERR historicos UNIT.xlsx + PPT Directorio Financiero Ene 2026 &middot; Cifras en CLP pesos chilenos</div>
 </div>
 
 <script>
@@ -939,7 +1049,7 @@ const gavVals=[25,23,11,31,11,26,18,10];
 const defs={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8890b0',font:{size:10}}}},scales:{x:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}}}};
 const noLeg={...defs,plugins:{...defs.plugins,legend:{display:false}}};
 
-function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj();if(id==='hlth'&&!window._hlthDone)initHlth();if(id==='jan26'&&!window._jan26Done)initJan26()}
+function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj();if(id==='hlth'&&!window._hlthDone)initHlth();if(id==='jan26'&&!window._jan26Done)initJan26();if(id==='tac'&&!window._tacDone)initTac()}
 
 function init(){
   // Revenue bar
@@ -1044,11 +1154,22 @@ function buildQtr(){
   });
 }
 
+function initTac(){
+  window._tacDone=true;
+  // Tactical impact chart: months with/without actions
+  new Chart(document.getElementById('cTacImpact'),{type:'bar',data:{labels:['Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],datasets:[
+    {label:'Flujo s/ acciones (c/ RAV)',data:[-45,-30,-80,20,60,30,-10,-20,15,40,10],backgroundColor:'rgba(248,113,113,.5)',borderColor:'#f87171',borderWidth:1,borderRadius:4},
+    {label:'Flujo c/ acciones tacticas',data:[-20,-5,-55,45,80,55,15,5,35,55,30],backgroundColor:'rgba(52,211,153,.5)',borderColor:'#34d399',borderWidth:1,borderRadius:4},
+    {label:'Caja acum. c/ acciones',data:[278,273,218,263,343,398,413,418,453,508,538],type:'line',borderColor:'#7c6bf0',borderWidth:2,tension:.3,pointRadius:3,yAxisID:'y1'}
+  ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'},title:{display:true,text:'Flujo Mensual (CLP M)',color:'#8890b0',font:{size:10}}},y1:{position:'right',ticks:{color:'#8890b0',font:{size:10},callback:v=>v+'M'},grid:{display:false},title:{display:true,text:'Caja Acum. (CLP M)',color:'#8890b0',font:{size:10}}}}}});
+}
+
 function initJan26(){
   window._jan26Done=true;
-  // Jan26 vs Jan25
+  // Jan26 vs Ppto vs Jan25
   new Chart(document.getElementById('cJan26vJan25'),{type:'bar',data:{labels:['Ingresos','Costos Dir.','Margen Contrib.','GAV','EBITDA','Util. Neta'],datasets:[
-    {label:'Ene 2026',data:[262.4,-51.4,211.0,-44.6,159.7,157.4],backgroundColor:'rgba(124,107,240,.6)',borderColor:'#7c6bf0',borderWidth:1,borderRadius:4},
+    {label:'Real Ene 2026',data:[262.4,-51.4,211.0,-44.6,159.7,157.4],backgroundColor:'rgba(124,107,240,.6)',borderColor:'#7c6bf0',borderWidth:1,borderRadius:4},
+    {label:'Ppto Ene 2026',data:[123.2,null,-8.6,null,-34.4,-36.7],backgroundColor:'rgba(251,191,36,.4)',borderColor:'#fbbf24',borderWidth:1,borderRadius:4},
     {label:'Ene 2025',data:[30.8,-36.8,-6.0,-18.8,-26.0,-28.6],backgroundColor:'rgba(96,165,250,.4)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}
   ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}}}});
   // Jan26 vs avg FY25
