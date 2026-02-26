@@ -144,6 +144,7 @@ tr:hover td{background:rgba(124,107,240,.04)}
   <button class="tab" onclick="sw('ins')">Insights</button>
   <button class="tab" onclick="sw('str')">Estrategia 2026</button>
   <button class="tab" onclick="sw('hlth')">Salud Financiera</button>
+  <button class="tab" onclick="sw('jan26')">Enero 2026</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -262,6 +263,223 @@ tr:hover td{background:rgba(124,107,240,.04)}
   </table>
   </div>
 </div>
+</div>
+
+<!-- ENERO 2026 -->
+<div id="p-jan26" class="pnl">
+
+<!-- KPIs Enero -->
+<div class="kpis" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px">
+  <div class="kpi"><div class="kpi-l">Ingresos Ene 2026</div><div class="kpi-v">$262M</div><div class="kpi-s">CLP millones</div><div class="kpi-delta up">+751% vs Ene25</div></div>
+  <div class="kpi"><div class="kpi-l">EBITDA Ene 2026</div><div class="kpi-v">$160M</div><div class="kpi-s">Margen 60.8%</div><div class="kpi-delta up">Ene25: -$26M</div></div>
+  <div class="kpi"><div class="kpi-l">Utilidad Neta</div><div class="kpi-v">$157M</div><div class="kpi-s">Margen 60.0%</div><div class="kpi-delta up">Ene25: -$29M</div></div>
+  <div class="kpi"><div class="kpi-l">Margen Contribucion</div><div class="kpi-v">80.4%</div><div class="kpi-s">$211M bruto</div><div class="kpi-delta up">vs 40.4% FY25</div></div>
+  <div class="kpi"><div class="kpi-l">Costos Directos</div><div class="kpi-v">$51M</div><div class="kpi-s">19.6% de ingresos</div><div class="kpi-delta up">vs 59.6% FY25</div></div>
+</div>
+
+<!-- Comparativa YoY -->
+<div class="g2">
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Enero 2026 vs Enero 2025 (CLP M)</div>
+    <div class="ch-t"><canvas id="cJan26vJan25"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--g)"></span>Enero 2026 vs Promedio Mensual FY25</div>
+    <div class="ch-t"><canvas id="cJan26vAvg"></canvas></div>
+  </div>
+</div>
+
+<!-- Semaforos de Desempeno -->
+<div class="hlth-grid">
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--gd);color:var(--g)">&#9650;</div>
+        <div><div class="hlth-title">Indicadores vs Enero 2025</div><div class="hlth-sub">Comparacion interanual</div></div>
+      </div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--g)">$262M</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: $31M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +751%</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Contribucion</div></div>
+        <div class="hlth-val" style="color:var(--g)">80.4%</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -19%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +100pp</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA</div></div>
+        <div class="hlth-val" style="color:var(--g)">$160M</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -$26M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen EBITDA</div></div>
+        <div class="hlth-val" style="color:var(--g)">60.8%</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -84%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +145pp</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Utilidad Neta</div></div>
+        <div class="hlth-val" style="color:var(--g)">$157M</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: -$29M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> Inversion</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Costos Dir. / Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--g)">19.6%</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Ene25: 119%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> -100pp</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--bd2);color:var(--b)">&#9679;</div>
+        <div><div class="hlth-title">Indicadores vs Promedio FY25</div><div class="hlth-sub">Benchmark mensual historico</div></div>
+      </div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--g)">$262M</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Prom: $119M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +121%</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Contribucion</div></div>
+        <div class="hlth-val" style="color:var(--g)">80.4%</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Prom: 40.4%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +40pp</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA</div></div>
+        <div class="hlth-val" style="color:var(--g)">$160M</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Prom: $29M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +458%</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen EBITDA</div></div>
+        <div class="hlth-val" style="color:var(--g)">60.8%</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Prom: 24.0%</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +37pp</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Utilidad Neta</div></div>
+        <div class="hlth-val" style="color:var(--g)">$157M</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Prom: $23M</div><div class="hlth-bm-tag above"><span class="hlth-bm-arrow">&#9650;</span> +585%</div></div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">GAV / Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--o)">17.0%</div>
+        <div class="hlth-bm"><div class="hlth-bm-val">Prom: 10.9%</div><div class="hlth-bm-tag below"><span class="hlth-bm-arrow">&#9660;</span> +6pp</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- P&L Detallado Enero 2026 -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Estado de Resultados - Enero 2026 (CLP miles)</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Concepto</th><th class="r">Ene 2026</th><th class="r">% Ing.</th><th class="r">Ene 2025</th><th class="r">% Ing.</th><th class="r">Variacion</th><th>Semaforo</th></tr></thead>
+    <tbody>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--g)">Ingresos</td><td class="r" style="font-weight:700;color:var(--g)">262,425</td><td class="r">100%</td><td class="r">30,849</td><td class="r">100%</td><td class="r" style="color:var(--g)">+751%</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Costos Directos</td><td class="r">-51,448</td><td class="r">-19.6%</td><td class="r">-36,811</td><td class="r">-119%</td><td class="r" style="color:var(--g)">+40%</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Labor</td><td class="r">-34,386</td><td class="r">-13.1%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Misiones/Viajes</td><td class="r">-16,724</td><td class="r">-6.4%</td><td class="r">-5,516</td><td class="r">-17.9%</td><td class="r" style="color:var(--r)">+203%</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--o)">Margen Contribucion</td><td class="r" style="font-weight:700;color:var(--g)">210,977</td><td class="r" style="color:var(--g)">80.4%</td><td class="r" style="color:var(--r)">-5,962</td><td class="r" style="color:var(--r)">-19.3%</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">GAV</td><td class="r">-44,637</td><td class="r">-17.0%</td><td class="r">-18,776</td><td class="r">-60.9%</td><td class="r" style="color:var(--r)">+138%</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Comisiones/Bonif.</td><td class="r">-15,166</td><td class="r">-5.8%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Inversion</td><td class="r">-5,074</td><td class="r">-1.9%</td><td class="r">-1,239</td><td class="r">-4.0%</td><td class="r" style="color:var(--r)">+310%</td><td><span class="pill pill-b">&#9644;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Ing. fuera Explot.</td><td class="r" style="color:var(--g)">942</td><td class="r">0.4%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">Egresos fuera Explot.</td><td class="r" style="color:var(--r)">-7,619</td><td class="r">-2.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">&nbsp; Dif. Cambio</td><td class="r" style="color:var(--r)">-7,617</td><td class="r">-2.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-o">&#9644;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">EBITDA</td><td class="r" style="font-weight:700;color:var(--g)">159,663</td><td class="r" style="color:var(--g)">60.8%</td><td class="r" style="color:var(--r)">-25,980</td><td class="r" style="color:var(--r)">-84.2%</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr><td class="nm" style="color:var(--t2)">IIDA</td><td class="r">-2,298</td><td class="r">-0.9%</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--b)">Utilidad Neta</td><td class="r" style="font-weight:700;color:var(--g)">157,365</td><td class="r" style="color:var(--g)">60.0%</td><td class="r" style="color:var(--r)">-28,584</td><td class="r" style="color:var(--r)">-92.7%</td><td class="r" style="color:var(--g)">-</td><td><span class="pill pill-g">&#9650;</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Estructura Costos Ene26 + Semaforos resumen -->
+<div class="g2">
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--pk)"></span>Estructura de Costos Directos - Enero 2026</div>
+    <div class="ch"><canvas id="cJan26Cost"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--tl)"></span>Semaforo Resumen - Enero 2026</div>
+    <div class="hlth-body" style="padding:14px 20px">
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingresos</div></div><div class="hlth-val" style="color:var(--g)">Excepcional</div><div class="hlth-ref" style="color:var(--g)">+751% YoY, +121% vs prom</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Rentabilidad</div></div><div class="hlth-val" style="color:var(--g)">Excepcional</div><div class="hlth-ref" style="color:var(--g)">MC 80%, EBITDA 61%</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Eficiencia Costos</div></div><div class="hlth-val" style="color:var(--g)">Excelente</div><div class="hlth-ref" style="color:var(--g)">CD solo 20% de ing</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">GAV / Ingresos</div></div><div class="hlth-val" style="color:var(--o)">Atencion</div><div class="hlth-ref" style="color:var(--o)">17% vs 11% prom FY25</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Misiones/Viajes</div></div><div class="hlth-val" style="color:var(--o)">Atencion</div><div class="hlth-ref" style="color:var(--o)">$17M, +203% vs Ene25</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Dif. Cambio</div></div><div class="hlth-val" style="color:var(--o)">Monitorear</div><div class="hlth-ref" style="color:var(--o)">-$7.6M, 2.9% de ing</div></div>
+      <div class="hlth-row"><div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Estacionalidad Q1</div></div><div class="hlth-val" style="color:var(--g)">Superada</div><div class="hlth-ref" style="color:var(--g)">Ene26 rompe patron Q1 debil</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Recomendaciones Tacticas Febrero -->
+<div class="rec-grid">
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--gd);color:var(--g)">&#9733;</div>
+      <div><div class="rec-title">Capitalizar Momentum - Feb 2026</div><div class="rec-sub">Acciones para mantener el ritmo excepcional</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">1</div>
+        <div><strong>Asegurar facturacion Feb >$150M:</strong> <span>Enero alcanzo $262M vs $0.6M en Feb25. Si Feb26 supera $150M, Q1 ya acumularia >$412M (vs $237M todo Q1 FY25). Priorizar cierre de hitos facturables pendientes.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">2</div>
+        <div><strong>Mantener margen contribucion >70%:</strong> <span>Ene26 logro 80.4% (vs 40% FY25). Esto indica proyectos de alta rentabilidad con bajo uso de subcontratos. Proteger este mix de proyectos en febrero.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--gd);color:var(--g)">3</div>
+        <div><strong>Pipeline Q2:</strong> <span>Con el Q1 encaminado a ser record, iniciar preventa de proyectos Q2 ahora. Q2 FY25 fue el trimestre mas fuerte ($528M). Apuntar a superar ese benchmark.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-hdr">
+      <div class="rec-icon" style="background:var(--od);color:var(--o)">&#9888;</div>
+      <div><div class="rec-title">Puntos de Atencion - Feb 2026</div><div class="rec-sub">Corregir antes de que escalen</div></div>
+    </div>
+    <div class="rec-body">
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">1</div>
+        <div><strong>Controlar GAV absoluto:</strong> <span>$44.6M en Ene26 vs $18.8M en Ene25 (+138%). El ratio 17% es aceptable con $262M de ingresos, pero si febrero cae, el GAV fijo comprime margenes. Revisar comisiones ($15.2M = 34% del GAV).</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">2</div>
+        <div><strong>Gestionar viajes/misiones:</strong> <span>$16.7M en enero (6.4% de ingresos, +203% vs Ene25). Si es proporcional a proyectos internacionales activos es aceptable, pero monitorear que no supere 7% de ingresos en febrero.</span></div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-num" style="background:var(--od);color:var(--o)">3</div>
+        <div><strong>Exposicion cambiaria:</strong> <span>Perdida de $7.6M por diferencia de cambio en un solo mes (2.9% de ingresos). Activar coberturas forward para contratos en USD/MXN activos en febrero para proteger la utilidad.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Proyeccion Q1 2026 -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Proyeccion Q1 2026 - Si febrero mantiene ritmo</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Escenario Feb 2026</th><th class="r">Ingresos Q1</th><th class="r">EBITDA Q1</th><th class="r">vs Q1 FY25 ($237M)</th><th>Probabilidad</th></tr></thead>
+    <tbody>
+      <tr><td class="nm" style="color:var(--r)">Conservador (Feb=$50M)</td><td class="r">$312M</td><td class="r">~$170M</td><td class="r" style="color:var(--g)">+32%</td><td><span class="pill pill-o">Si Feb cae</span></td></tr>
+      <tr><td class="nm" style="color:var(--o)">Base (Feb=$150M)</td><td class="r">$412M</td><td class="r">~$250M</td><td class="r" style="color:var(--g)">+74%</td><td><span class="pill pill-b">Probable</span></td></tr>
+      <tr><td class="nm" style="color:var(--g)">Optimista (Feb=$250M)</td><td class="r">$512M</td><td class="r">~$310M</td><td class="r" style="color:var(--g)">+116%</td><td><span class="pill pill-g">Si mantiene</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
 </div>
 
 <!-- SALUD FINANCIERA -->
@@ -721,7 +939,7 @@ const gavVals=[25,23,11,31,11,26,18,10];
 const defs={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8890b0',font:{size:10}}}},scales:{x:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}}}};
 const noLeg={...defs,plugins:{...defs.plugins,legend:{display:false}}};
 
-function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj();if(id==='hlth'&&!window._hlthDone)initHlth()}
+function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj();if(id==='hlth'&&!window._hlthDone)initHlth();if(id==='jan26'&&!window._jan26Done)initJan26()}
 
 function init(){
   // Revenue bar
@@ -824,6 +1042,22 @@ function buildQtr(){
     html+=`<td class="r" style="color:var(--t2)">${(r.pfy*100).toFixed(0)}%</td>`;
     tr.innerHTML=html;tb.appendChild(tr);
   });
+}
+
+function initJan26(){
+  window._jan26Done=true;
+  // Jan26 vs Jan25
+  new Chart(document.getElementById('cJan26vJan25'),{type:'bar',data:{labels:['Ingresos','Costos Dir.','Margen Contrib.','GAV','EBITDA','Util. Neta'],datasets:[
+    {label:'Ene 2026',data:[262.4,-51.4,211.0,-44.6,159.7,157.4],backgroundColor:'rgba(124,107,240,.6)',borderColor:'#7c6bf0',borderWidth:1,borderRadius:4},
+    {label:'Ene 2025',data:[30.8,-36.8,-6.0,-18.8,-26.0,-28.6],backgroundColor:'rgba(96,165,250,.4)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}
+  ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}}}});
+  // Jan26 vs avg FY25
+  new Chart(document.getElementById('cJan26vAvg'),{type:'bar',data:{labels:['Ingresos','Costos Dir.','Margen Contrib.','GAV','EBITDA','Util. Neta'],datasets:[
+    {label:'Ene 2026',data:[262.4,-51.4,211.0,-44.6,159.7,157.4],backgroundColor:'rgba(52,211,153,.6)',borderColor:'#34d399',borderWidth:1,borderRadius:4},
+    {label:'Prom. Mensual FY25',data:[119.0,-70.9,48.1,-12.9,28.6,23.0],backgroundColor:'rgba(251,191,36,.4)',borderColor:'#fbbf24',borderWidth:1,borderRadius:4}
+  ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'M'}}}}});
+  // Cost breakdown pie
+  new Chart(document.getElementById('cJan26Cost'),{type:'doughnut',data:{labels:['Consul. Expert','Consul. Senior','Consul. Mid','Consul. Junior','Pasajes Aereos','Alojamiento','Alim/Traslados','Otros CD'],datasets:[{data:[15.8,9.5,7.9,1.2,15.0,1.3,0.5,0.3],backgroundColor:['#7c6bf0','#a99ff5','#60a5fa','#2dd4bf','#f87171','#fbbf24','#f472b6','#c084fc'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8890b0',font:{size:9},padding:8}}}}});
 }
 
 function initHlth(){
