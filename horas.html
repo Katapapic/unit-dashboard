@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNIT - Control de Horas Enero 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0a0c10;--s1:#12151e;--s2:#1a1e2e;--s3:#232940;--bd:#2c3350;
+  --t1:#eaecf5;--t2:#8890b0;--t3:#555d80;
+  --acc:#7c6bf0;--acc2:#a99ff5;--g:#34d399;--gd:rgba(52,211,153,.12);
+  --r:#f87171;--rd:rgba(248,113,113,.12);--o:#fbbf24;--od:rgba(251,191,36,.12);
+  --b:#60a5fa;--bd2:rgba(96,165,250,.12);--p:#c084fc;--pk:#f472b6;--tl:#2dd4bf;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--t1);line-height:1.5}
+.hdr{background:linear-gradient(135deg,var(--s1),var(--s2));border-bottom:1px solid var(--bd);padding:24px 40px;display:flex;align-items:flex-end;justify-content:space-between}
+.hdr h1{font-size:24px;font-weight:700;background:linear-gradient(135deg,var(--acc2),var(--tl));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hdr .sub{color:var(--t2);font-size:12px;margin-top:4px}
+.hdr .badge{background:var(--s3);border:1px solid var(--bd);border-radius:8px;padding:6px 14px;font-size:11px;color:var(--t2)}
+.wrap{max-width:1480px;margin:0 auto;padding:24px 40px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:18px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0}
+.kpi:nth-child(1)::before{background:var(--acc)}.kpi:nth-child(2)::before{background:var(--g)}
+.kpi:nth-child(3)::before{background:var(--o)}.kpi:nth-child(4)::before{background:var(--b)}
+.kpi:nth-child(5)::before{background:var(--pk)}.kpi:nth-child(6)::before{background:var(--tl)}
+.kpi-l{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.kpi-v{font-size:24px;font-weight:700}.kpi-s{font-size:10px;color:var(--t2);margin-top:3px}
+.kpi-delta{font-size:11px;font-weight:600;margin-top:4px}
+.up{color:var(--g)}.dn{color:var(--r)}.nt{color:var(--o)}
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:4px;width:fit-content}
+.tab{padding:8px 20px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;color:var(--t2);border:none;background:transparent;transition:.2s}
+.tab:hover{color:var(--t1);background:var(--s2)}.tab.on{background:var(--acc);color:#fff}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px}
+.card-t{font-size:13px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.ch{position:relative;height:280px}.ch-t{position:relative;height:340px}.ch-s{position:relative;height:220px}.ch-xl{position:relative;height:420px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--t2);border-bottom:1px solid var(--bd);background:var(--s1);position:sticky;top:0}
+th.r,td.r{text-align:right}
+td{padding:8px 10px;border-bottom:1px solid rgba(44,51,80,.4)}
+tr:hover td{background:rgba(124,107,240,.04)}
+.nm{font-weight:500}
+.pnl{display:none}.pnl.on{display:block}
+.fw{margin-bottom:20px}
+.pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:600}
+.pill-g{background:var(--gd);color:var(--g)}.pill-r{background:var(--rd);color:var(--r)}
+.pill-o{background:var(--od);color:var(--o)}.pill-b{background:var(--bd2);color:var(--b)}
+.insight{background:var(--s2);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;margin-bottom:12px;font-size:12px;line-height:1.6}
+.insight strong{color:var(--acc2)}
+.tbl-s{max-height:500px;overflow-y:auto}
+.tbl-s::-webkit-scrollbar{width:5px}.tbl-s::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+.ft{margin-top:32px;padding:16px 0;border-top:1px solid var(--bd);text-align:center;color:var(--t3);font-size:10px}
+.sem{width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px;display:inline-block;vertical-align:middle;margin-right:6px}
+.sem-g{background:var(--g);box-shadow:0 0 8px rgba(52,211,153,.5)}
+.sem-y{background:var(--o);box-shadow:0 0 8px rgba(251,191,36,.5)}
+.sem-r{background:var(--r);box-shadow:0 0 8px rgba(248,113,113,.5)}
+.alert-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.alert-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.alert-hdr{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px}
+.alert-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.alert-title{font-size:14px;font-weight:700}
+.alert-sub{font-size:11px;color:var(--t2);margin-top:2px}
+.alert-body{padding:18px 20px}
+.alert-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(44,51,80,.3);font-size:12px}
+.alert-item:last-child{border-bottom:none}
+.alert-left{display:flex;align-items:center;gap:10px}
+.bar-wrap{position:relative;height:28px;background:var(--s3);border-radius:6px;overflow:hidden;margin-bottom:8px}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding:0 10px}
+.bar-label{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:600;color:var(--t1)}
+.bar-name{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:600;color:var(--t1);white-space:nowrap;z-index:1}
+.dev-bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.dev-bar-name{width:120px;font-size:11px;text-align:right;flex-shrink:0;color:var(--t2)}
+.dev-bar-track{flex:1;height:20px;background:var(--s3);border-radius:4px;position:relative;overflow:hidden}
+.dev-bar-fill{height:100%;border-radius:4px;position:absolute;top:0}
+.dev-bar-val{font-size:10px;font-weight:600;width:60px;text-align:right;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div>
+    <h1>UNIT - Control de Horas Equipo</h1>
+    <div class="sub">Enero 2026 &middot; Horas reales vs presupuestadas &middot; Consultora global por proyecto</div>
+  </div>
+  <div class="badge">Periodo: Enero 2026 &middot; 670 HH registradas &middot; $16.9M CLP</div>
+</div>
+<div class="wrap">
+
+<!-- KPIs -->
+<div class="kpis">
+  <div class="kpi"><div class="kpi-l">Horas Reales Enero</div><div class="kpi-v">670h</div><div class="kpi-s">Presupuesto: 184h</div><div class="kpi-delta dn">+264% sobre ppto</div></div>
+  <div class="kpi"><div class="kpi-l">Costo Total HH</div><div class="kpi-v">$16.9M</div><div class="kpi-s">CLP pesos chilenos</div><div class="kpi-delta">$25.3K/HH prom.</div></div>
+  <div class="kpi"><div class="kpi-l">Consultores Activos</div><div class="kpi-v">6 de 13</div><div class="kpi-s">46% del equipo con horas</div><div class="kpi-delta nt">7 sin registro</div></div>
+  <div class="kpi"><div class="kpi-l">HH Billable (Proyectos)</div><div class="kpi-v">331h</div><div class="kpi-s">49% del total</div><div class="kpi-delta up">En ejecucion</div></div>
+  <div class="kpi"><div class="kpi-l">HH No Billable</div><div class="kpi-v">259h</div><div class="kpi-s">Mktg + Interno + Ventas</div><div class="kpi-delta nt">39% del total</div></div>
+  <div class="kpi"><div class="kpi-l">Vacaciones/Feriados</div><div class="kpi-v">80h</div><div class="kpi-s">12% del total</div><div class="kpi-delta">Ene: 4 feriados</div></div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab on" onclick="sw('ov')">Resumen Ejecutivo</button>
+  <button class="tab" onclick="sw('cons')">Por Consultor</button>
+  <button class="tab" onclick="sw('proj')">Por Proyecto</button>
+  <button class="tab" onclick="sw('det')">Detalle Cruzado</button>
+  <button class="tab" onclick="sw('act')">Por Actividad</button>
+</div>
+
+<!-- ==================== RESUMEN EJECUTIVO ==================== -->
+<div id="p-ov" class="pnl on">
+
+<div class="insight" style="border-left:3px solid var(--r);margin-bottom:20px"><strong>Alerta Principal:</strong> Las horas reales de enero (670h) superan el presupuesto (184h) en un +264%. Esto refleja proyectos no presupuestados para enero (RDominicana Bloomberg, Bloomberg Identidad Visual), carga operativa interna significativa (100h en desarrollo interno + 147h en marketing) y 80h de vacaciones/feriados de inicio de ano. Solo 6 de 13 consultores presupuestados registraron horas.</div>
+
+<!-- Alertas -->
+<div class="alert-grid">
+  <!-- Top desvios consultores -->
+  <div class="alert-card">
+    <div class="alert-hdr">
+      <div class="alert-icon" style="background:var(--rd);color:var(--r)">&#9888;</div>
+      <div><div class="alert-title">Consultores Mas Desviados</div><div class="alert-sub">Horas reales vs presupuesto enero 2026</div></div>
+    </div>
+    <div class="alert-body">
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-r"></div><div>Nicolas Rebolledo</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--r)">161h vs 21h</div><div style="font-size:10px;color:var(--t2)">+667% sobre ppto</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-r"></div><div>Katalina Papic</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--r)">136h vs 21h</div><div style="font-size:10px;color:var(--t2)">+548% sobre ppto</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-r"></div><div>Beatriz Hasbun</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--r)">120h vs 19h</div><div style="font-size:10px;color:var(--t2)">+525% sobre ppto</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-r"></div><div>Florencia Aguirre</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--r)">96h vs 8h</div><div style="font-size:10px;color:var(--t2)">+1100% sobre ppto</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-r"></div><div>Vicente Puig</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--r)">109h vs 13h</div><div style="font-size:10px;color:var(--t2)">+752% sobre ppto</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-r"></div><div>Valentina Lopez</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--r)">48h vs 0h</div><div style="font-size:10px;color:var(--t2)">Sin presupuesto</div></div></div>
+    </div>
+  </div>
+  <!-- Consultores sin horas -->
+  <div class="alert-card">
+    <div class="alert-hdr">
+      <div class="alert-icon" style="background:var(--od);color:var(--o)">&#128101;</div>
+      <div><div class="alert-title">Equipo Sin Horas Registradas</div><div class="alert-sub">Consultores presupuestados sin actividad en enero</div></div>
+    </div>
+    <div class="alert-body">
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-y"></div><div>Juan Felipe Lopez</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--o)">0h registradas</div><div style="font-size:10px;color:var(--t2)">Ppto: 25.8h</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-y"></div><div>Angela Reyes</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--o)">0h registradas</div><div style="font-size:10px;color:var(--t2)">Ppto: 20h (PM OIC)</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-y"></div><div>Daniela Lopez</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--o)">0h registradas</div><div style="font-size:10px;color:var(--t2)">Ppto: 19.5h (Utopias)</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-y"></div><div>Rafael Franco</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--o)">0h registradas</div><div style="font-size:10px;color:var(--t2)">Ppto: 10.7h</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-y"></div><div>Maria Garreaud</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--o)">0h registradas</div><div style="font-size:10px;color:var(--t2)">Ppto: 4.3h</div></div></div>
+      <div class="alert-item"><div class="alert-left"><div class="sem sem-y"></div><div>TBD (roles abiertos)</div></div><div style="text-align:right"><div style="font-weight:700;color:var(--o)">Vacantes</div><div style="font-size:10px;color:var(--t2)">Ppto: 22h (6 roles)</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts resumen -->
+<div class="g2">
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Horas Reales vs Presupuesto por Consultor</div>
+    <div class="ch-t"><canvas id="cConsComp"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--g)"></span>Distribucion de Horas por Tipo de Actividad</div>
+    <div class="ch-t"><canvas id="cActPie"></canvas></div>
+  </div>
+</div>
+
+<!-- Insights -->
+<div class="g2">
+  <div class="insight" style="border-left:3px solid var(--o)"><strong>Proyectos no presupuestados en enero:</strong> RDominicana Bloomberg (202h), Bloomberg Identidad Visual (14h) y CAF Smartcities (11h) no tenian presupuesto de horas para enero. Esto explica la mayor parte de la desviacion. Estos proyectos estan generando ingresos pero con HH no planificadas.</div>
+  <div class="insight" style="border-left:3px solid var(--b)"><strong>Carga interna alta:</strong> 100h en desarrollo interno (gestion, estrategia, admin financiera) + 147h en marketing/RRPP representan 37% del total. Para una consultora por proyecto, la meta es que HH internas no superen 20-25% del total. Evaluar reasignacion a proyectos billable.</div>
+</div>
+
+<div class="g2">
+  <div class="insight" style="border-left:3px solid var(--g)"><strong>Ratio billable/total:</strong> 49% de las horas son de ejecucion de proyectos (331h). Excluyendo vacaciones (80h), el ratio sube a 56%. El benchmark para consultoras globales es 65-70%. Oportunidad de mejora: reducir horas internas y aumentar apalancamiento en proyectos.</div>
+  <div class="insight" style="border-left:3px solid var(--pk)"><strong>Concentracion en socios:</strong> Los 3 socios (Nicolas, Katalina, Juan Felipe) concentran 297h presupuestadas/reales. Nicolas y Katalina estan ejecutando fuertemente (161h + 136h), mientras Juan Felipe no registro horas. Riesgo de burnout y dependencia de socios clave.</div>
+</div>
+
+</div>
+
+<!-- ==================== POR CONSULTOR ==================== -->
+<div id="p-cons" class="pnl">
+
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--acc)"></span>Desviacion de Horas por Consultor - Enero 2026</div></div>
+
+<!-- Chart comparativo -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Real vs Presupuesto por Consultor (horas)</div>
+  <div class="ch-xl"><canvas id="cConsBar"></canvas></div>
+</div>
+
+<!-- Tabla detallada por consultor -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--g)"></span>Detalle por Consultor - Horas, Costo y Desviacion</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Consultor</th><th class="r">Ppto (h)</th><th class="r">Real (h)</th><th class="r">Desv. (h)</th><th class="r">Desv. %</th><th class="r">Costo CLP</th><th class="r">$/HH</th><th>Sem.</th><th>Detalle Proyectos</th></tr></thead>
+    <tbody>
+      <tr><td class="nm" style="font-weight:700">Nicolas Rebolledo</td><td class="r">21.0</td><td class="r" style="font-weight:700">161</td><td class="r" style="color:var(--r)">+140</td><td class="r" style="color:var(--r)">+667%</td><td class="r">$4,961K</td><td class="r">$30.8K</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Vacaciones 32h, Estrategia 22h, Gestion 16h, Mktg 15h, Bloomberg IV 14h, OIC 12h, Storytelling 12h, Utopias 8h, Eventos 8h, I+D 6h, Ventas 4h, RRPP 4h</td></tr>
+      <tr><td class="nm" style="font-weight:700">Katalina Papic</td><td class="r">21.0</td><td class="r" style="font-weight:700">136</td><td class="r" style="color:var(--r)">+115</td><td class="r" style="color:var(--r)">+548%</td><td class="r">$4,920K</td><td class="r">$36.2K</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Admin Fin. 32h, RDominicana 32h, Feriados 16h, Gestion 16h, Utopias 12h, Estrategia 8h, OIC 8h, Ventas 8h, Storytelling 4h</td></tr>
+      <tr><td class="nm" style="font-weight:700">Beatriz Hasbun</td><td class="r">19.2</td><td class="r" style="font-weight:700">120</td><td class="r" style="color:var(--r)">+101</td><td class="r" style="color:var(--r)">+525%</td><td class="r">$2,327K</td><td class="r">$19.4K</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">RDominicana Bloomberg 120h (100% dedicada)</td></tr>
+      <tr><td class="nm" style="font-weight:700">Vicente Puig</td><td class="r">12.8</td><td class="r" style="font-weight:700">109</td><td class="r" style="color:var(--r)">+96</td><td class="r" style="color:var(--r)">+752%</td><td class="r">$2,102K</td><td class="r">$19.3K</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">RDominicana 50h, Mktg/Diseno Publico 48h, CAF Smartcities 11h</td></tr>
+      <tr><td class="nm" style="font-weight:700">Florencia Aguirre</td><td class="r">8.0</td><td class="r" style="font-weight:700">96</td><td class="r" style="color:var(--r)">+88</td><td class="r" style="color:var(--r)">+1100%</td><td class="r">$1,569K</td><td class="r">$16.3K</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Mktg 24h, Vacaciones 24h, Renca 24h, Storytelling 24h</td></tr>
+      <tr><td class="nm" style="font-weight:700">Valentina Lopez</td><td class="r">0</td><td class="r" style="font-weight:700">48</td><td class="r" style="color:var(--r)">+48</td><td class="r" style="color:var(--r)">N/A</td><td class="r">$1,053K</td><td class="r">$21.9K</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Mktg y Comunicaciones 48h (100% dedicada)</td></tr>
+      <tr style="background:var(--s2)"><td class="nm" style="color:var(--o)">Juan Felipe Lopez</td><td class="r">25.8</td><td class="r" style="font-weight:700;color:var(--o)">0</td><td class="r" style="color:var(--o)">-26</td><td class="r" style="color:var(--o)">-100%</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Sin registro. Ppto: OIC 6h, Utopias 10h, Diseno Pub. 2h, Venta 5h, Estr. 2h</td></tr>
+      <tr style="background:var(--s2)"><td class="nm" style="color:var(--o)">Angela Reyes</td><td class="r">20.0</td><td class="r" style="font-weight:700;color:var(--o)">0</td><td class="r" style="color:var(--o)">-20</td><td class="r" style="color:var(--o)">-100%</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Sin registro. Ppto: Programme Manager OIC 20h</td></tr>
+      <tr style="background:var(--s2)"><td class="nm" style="color:var(--o)">Daniela Lopez</td><td class="r">19.5</td><td class="r" style="font-weight:700;color:var(--o)">0</td><td class="r" style="color:var(--o)">-20</td><td class="r" style="color:var(--o)">-100%</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Sin registro. Ppto: Coordinator Utopias Mexico 19.5h</td></tr>
+      <tr style="background:var(--s2)"><td class="nm" style="color:var(--o)">Rafael Franco</td><td class="r">10.7</td><td class="r" style="font-weight:700;color:var(--o)">0</td><td class="r" style="color:var(--o)">-11</td><td class="r" style="color:var(--o)">-100%</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Sin registro. Ppto: Storytelling 10.7h</td></tr>
+      <tr style="background:var(--s2)"><td class="nm" style="color:var(--o)">Maria Garreaud</td><td class="r">4.3</td><td class="r" style="font-weight:700;color:var(--o)">0</td><td class="r" style="color:var(--o)">-4</td><td class="r" style="color:var(--o)">-100%</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Sin registro. Ppto: Senior Service Designer Utopias 4.3h</td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">TOTAL</td><td class="r" style="font-weight:700">184.3</td><td class="r" style="font-weight:700">670</td><td class="r" style="font-weight:700;color:var(--r)">+486</td><td class="r" style="font-weight:700;color:var(--r)">+264%</td><td class="r" style="font-weight:700">$16,931K</td><td class="r" style="font-weight:700">$25.3K</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Costo por consultor -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--pk)"></span>Costo por Consultor (CLP miles)</div>
+  <div class="ch"><canvas id="cConsCost"></canvas></div>
+</div>
+</div>
+
+<!-- ==================== POR PROYECTO ==================== -->
+<div id="p-proj" class="pnl">
+
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--g)"></span>Horas por Proyecto/Actividad - Enero 2026</div></div>
+
+<!-- Chart comparativo proyectos -->
+<div class="g2">
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Horas Reales por Proyecto Billable</div>
+    <div class="ch-t"><canvas id="cProjBar"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--g)"></span>Proyectos: Real vs Presupuesto</div>
+    <div class="ch-t"><canvas id="cProjComp"></canvas></div>
+  </div>
+</div>
+
+<!-- Tabla proyectos -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--b)"></span>Detalle por Proyecto - Horas Reales vs Presupuestadas</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Proyecto</th><th>Tipo</th><th class="r">Ppto (h)</th><th class="r">Real (h)</th><th class="r">Desv. (h)</th><th class="r">Desv. %</th><th>Sem.</th><th>Consultores</th></tr></thead>
+    <tbody>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">RDominicana Bloomberg</td><td><span class="pill pill-g">Billable</span></td><td class="r">0</td><td class="r" style="font-weight:700">202</td><td class="r" style="color:var(--r)">+202</td><td class="r" style="color:var(--r)">N/A</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Beatriz 120h, Vicente 50h, Katalina 32h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Mktg y Comunicaciones</td><td><span class="pill pill-o">Interno</span></td><td class="r">~6</td><td class="r" style="font-weight:700">135</td><td class="r" style="color:var(--r)">+129</td><td class="r" style="color:var(--r)">+2150%</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Valentina 48h, Vicente 48h, Florencia 24h, Nicolas 15h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Vacaciones/Feriados</td><td><span class="pill pill-b">No prod.</span></td><td class="r">-</td><td class="r" style="font-weight:700">80</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 40h, Florencia 24h, Katalina 16h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Gestion Interna</td><td><span class="pill pill-o">Interno</span></td><td class="r">-</td><td class="r" style="font-weight:700">32</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 16h, Katalina 16h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Admin Financiera</td><td><span class="pill pill-o">Interno</span></td><td class="r">-</td><td class="r" style="font-weight:700">32</td><td class="r">-</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Katalina 32h (100%)</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Estrategia Unit</td><td><span class="pill pill-o">Interno</span></td><td class="r">6</td><td class="r" style="font-weight:700">30</td><td class="r" style="color:var(--r)">+24</td><td class="r" style="color:var(--r)">+400%</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 22h, Katalina 8h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">Storytelling USA / Iteams</td><td><span class="pill pill-g">Billable</span></td><td class="r">39.7</td><td class="r" style="font-weight:700">40</td><td class="r" style="color:var(--g)">+0.3</td><td class="r" style="color:var(--g)">+1%</td><td><div class="sem sem-g"></div></td><td style="font-size:10px;color:var(--t2)">Florencia 24h, Nicolas 12h, Katalina 4h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">La Fabrica Renca</td><td><span class="pill pill-g">Billable</span></td><td class="r">0</td><td class="r" style="font-weight:700">24</td><td class="r" style="color:var(--r)">+24</td><td class="r" style="color:var(--r)">N/A</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Florencia 24h (100%)</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">OIC San Francisco</td><td><span class="pill pill-g">Billable</span></td><td class="r">64.0</td><td class="r" style="font-weight:700">20</td><td class="r" style="color:var(--o)">-44</td><td class="r" style="color:var(--o)">-69%</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 12h, Katalina 8h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">Utopias CDMX</td><td><span class="pill pill-g">Billable</span></td><td class="r">52.2</td><td class="r" style="font-weight:700">20</td><td class="r" style="color:var(--o)">-32</td><td class="r" style="color:var(--o)">-62%</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Katalina 12h, Nicolas 8h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">Bloomberg Identidad Visual</td><td><span class="pill pill-g">Billable</span></td><td class="r">0</td><td class="r" style="font-weight:700">14</td><td class="r" style="color:var(--r)">+14</td><td class="r" style="color:var(--r)">N/A</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 14h (100%)</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Ventas/Propuestas</td><td><span class="pill pill-b">Preventa</span></td><td class="r">15</td><td class="r" style="font-weight:700">12</td><td class="r" style="color:var(--g)">-3</td><td class="r" style="color:var(--g)">-20%</td><td><div class="sem sem-g"></div></td><td style="font-size:10px;color:var(--t2)">Katalina 8h, Nicolas 4h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--g)">CAF Smartcities</td><td><span class="pill pill-g">Billable</span></td><td class="r">0</td><td class="r" style="font-weight:700">11</td><td class="r" style="color:var(--r)">+11</td><td class="r" style="color:var(--r)">N/A</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Vicente 11h (100%)</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">Eventos/RRPP</td><td><span class="pill pill-o">Interno</span></td><td class="r">1.5</td><td class="r" style="font-weight:700">12</td><td class="r" style="color:var(--r)">+10.5</td><td class="r" style="color:var(--r)">+700%</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 8h, Nicolas RRPP 4h</td></tr>
+      <tr><td class="nm" style="font-weight:700;color:var(--t2)">I+D</td><td><span class="pill pill-b">Inversion</span></td><td class="r">0</td><td class="r" style="font-weight:700">6</td><td class="r" style="color:var(--r)">+6</td><td class="r" style="color:var(--r)">N/A</td><td><div class="sem sem-r"></div></td><td style="font-size:10px;color:var(--t2)">Nicolas 6h</td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">TOTAL</td><td></td><td class="r" style="font-weight:700">184</td><td class="r" style="font-weight:700">670</td><td class="r" style="font-weight:700;color:var(--r)">+486</td><td class="r" style="font-weight:700;color:var(--r)">+264%</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="insight" style="border-left:3px solid var(--acc);margin-bottom:20px"><strong>Proyecto estrella:</strong> RDominicana Bloomberg es el mayor consumidor de HH (202h, 30% del total) con 3 consultores asignados (Beatriz 100% dedicada). Este proyecto no estaba presupuestado para enero pero genera ingresos significativos. <strong>OIC San Francisco</strong> y <strong>Utopias Mexico</strong> estan subejecutados (-69% y -62% vs ppto), posiblemente por reasignacion de recursos a Bloomberg.</div>
+</div>
+
+<!-- ==================== DETALLE CRUZADO ==================== -->
+<div id="p-det" class="pnl">
+
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--p)"></span>Matriz Consultor x Proyecto - Enero 2026 (horas)</div></div>
+
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Horas por Consultor y Proyecto</div>
+  <div class="tbl-s" style="max-height:600px">
+  <table>
+    <thead><tr><th>Consultor</th><th class="r">RDom. Bloom.</th><th class="r">Mktg</th><th class="r">Vacac.</th><th class="r">Gestion</th><th class="r">Admin Fin.</th><th class="r">Estrategia</th><th class="r">Story. USA</th><th class="r">Renca</th><th class="r">OIC SFCO</th><th class="r">Utopias</th><th class="r">Bloom. IV</th><th class="r">Ventas</th><th class="r">CAF</th><th class="r">Eventos</th><th class="r">I+D</th><th class="r">RRPP</th><th class="r" style="font-weight:700">TOTAL</th></tr></thead>
+    <tbody>
+      <tr><td class="nm" style="font-weight:700">N. Rebolledo</td><td class="r">-</td><td class="r">15</td><td class="r">40</td><td class="r">16</td><td class="r">-</td><td class="r">22</td><td class="r">12</td><td class="r">-</td><td class="r">12</td><td class="r">8</td><td class="r">14</td><td class="r">4</td><td class="r">-</td><td class="r">8</td><td class="r">6</td><td class="r">4</td><td class="r" style="font-weight:700;color:var(--acc2)">161</td></tr>
+      <tr><td class="nm" style="font-weight:700">K. Papic</td><td class="r">32</td><td class="r">-</td><td class="r">16</td><td class="r">16</td><td class="r">32</td><td class="r">8</td><td class="r">4</td><td class="r">-</td><td class="r">8</td><td class="r">12</td><td class="r">-</td><td class="r">8</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r" style="font-weight:700;color:var(--acc2)">136</td></tr>
+      <tr><td class="nm" style="font-weight:700">B. Hasbun</td><td class="r" style="color:var(--g)">120</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r" style="font-weight:700;color:var(--acc2)">120</td></tr>
+      <tr><td class="nm" style="font-weight:700">V. Puig</td><td class="r">50</td><td class="r">48</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">11</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r" style="font-weight:700;color:var(--acc2)">109</td></tr>
+      <tr><td class="nm" style="font-weight:700">F. Aguirre</td><td class="r">-</td><td class="r">24</td><td class="r">24</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">24</td><td class="r">24</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r" style="font-weight:700;color:var(--acc2)">96</td></tr>
+      <tr><td class="nm" style="font-weight:700">V. Lopez</td><td class="r">-</td><td class="r">48</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r">-</td><td class="r" style="font-weight:700;color:var(--acc2)">48</td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">TOTAL</td><td class="r" style="font-weight:700">202</td><td class="r" style="font-weight:700">135</td><td class="r" style="font-weight:700">80</td><td class="r" style="font-weight:700">32</td><td class="r" style="font-weight:700">32</td><td class="r" style="font-weight:700">30</td><td class="r" style="font-weight:700">40</td><td class="r" style="font-weight:700">24</td><td class="r" style="font-weight:700">20</td><td class="r" style="font-weight:700">20</td><td class="r" style="font-weight:700">14</td><td class="r" style="font-weight:700">12</td><td class="r" style="font-weight:700">11</td><td class="r" style="font-weight:700">8</td><td class="r" style="font-weight:700">6</td><td class="r" style="font-weight:700">4</td><td class="r" style="font-weight:700;color:var(--acc2)">670</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Heatmap chart -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--tl)"></span>Concentracion de Horas - Top Combinaciones Consultor/Proyecto</div>
+  <div class="ch-xl"><canvas id="cHeat"></canvas></div>
+</div>
+
+</div>
+
+<!-- ==================== POR ACTIVIDAD ==================== -->
+<div id="p-act" class="pnl">
+
+<div style="margin-bottom:8px"><div class="card-t"><span class="dot" style="background:var(--tl)"></span>Clasificacion por Tipo de Actividad - Enero 2026</div></div>
+
+<div class="g2">
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--acc)"></span>Distribucion por Categoria de Actividad</div>
+    <div class="ch-t"><canvas id="cActBar"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-t"><span class="dot" style="background:var(--g)"></span>Billable vs No Billable vs No Productivo</div>
+    <div class="ch-t"><canvas id="cBillPie"></canvas></div>
+  </div>
+</div>
+
+<!-- Tabla actividad detallada -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--b)"></span>Detalle por Tipo de Actividad</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Actividad</th><th>Clasificacion</th><th class="r">Horas</th><th class="r">% Total</th><th class="r">Costo CLP</th><th>Sem.</th><th>Observacion</th></tr></thead>
+    <tbody>
+      <tr><td class="nm" style="font-weight:700">Ejecucion Proyectos</td><td><span class="pill pill-g">Billable</span></td><td class="r" style="font-weight:700">331</td><td class="r">49.4%</td><td class="r">$9,323K</td><td><div class="sem sem-g"></div></td><td style="font-size:10px;color:var(--t2)">7 proyectos activos. Generador de ingresos.</td></tr>
+      <tr><td class="nm" style="font-weight:700">Marketing y RRPP</td><td><span class="pill pill-o">No billable</span></td><td class="r" style="font-weight:700">147</td><td class="r">21.9%</td><td class="r">$4,319K</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Mktg 135h + Eventos 8h + Viajes RRPP 4h. Muy alto.</td></tr>
+      <tr><td class="nm" style="font-weight:700">Desarrollo Interno</td><td><span class="pill pill-o">No billable</span></td><td class="r" style="font-weight:700">100</td><td class="r">14.9%</td><td class="r">$2,952K</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Gestion 32h, Admin Fin 32h, Estrategia 30h, I+D 6h</td></tr>
+      <tr><td class="nm" style="font-weight:700">Vacaciones y Feriados</td><td><span class="pill pill-b">No productivo</span></td><td class="r" style="font-weight:700">80</td><td class="r">11.9%</td><td class="r">-</td><td><div class="sem sem-y"></div></td><td style="font-size:10px;color:var(--t2)">Normal para enero (feriados + vacaciones verano)</td></tr>
+      <tr><td class="nm" style="font-weight:700">Preventa (Entender Entorno)</td><td><span class="pill pill-b">Preventa</span></td><td class="r" style="font-weight:700">12</td><td class="r">1.8%</td><td class="r">$328K</td><td><div class="sem sem-g"></div></td><td style="font-size:10px;color:var(--t2)">Propuestas comerciales. Bajo para consultora.</td></tr>
+      <tr style="border-top:2px solid var(--bd)"><td class="nm" style="font-weight:700;color:var(--acc2)">TOTAL</td><td></td><td class="r" style="font-weight:700">670</td><td class="r" style="font-weight:700">100%</td><td class="r" style="font-weight:700">$16,931K</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- Benchmarks -->
+<div class="g2">
+  <div class="insight" style="border-left:3px solid var(--r)"><strong>Ratio Billable (49%) vs Benchmark Consultora (65-70%):</strong> Solo la mitad de las horas generan ingresos directos. Excluyendo vacaciones: 56%. Aun 10-15pp bajo benchmark. Las 147h de marketing y 100h de desarrollo interno son los principales drivers. Recomendacion: redistribuir 40-50h internas a proyectos billable en febrero.</div>
+  <div class="insight" style="border-left:3px solid var(--g)"><strong>Preventa muy baja (1.8%):</strong> Solo 12h en propuestas/ventas para una consultora que deberia estar llenando pipeline Q1-Q2. El benchmark es 8-12% del total. Con $262M de ingresos en enero, el pipeline debe alimentarse para mantener ritmo. Meta febrero: 40-60h en preventa.</div>
+</div>
+
+</div>
+
+<div class="ft">UNIT - Dashboard Control de Horas &middot; Fuente: Control de horas equipo UNIT.xlsx &middot; Enero 2026 &middot; Cifras en horas y CLP</div>
+</div>
+
+<script>
+const defs={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8890b0',font:{size:10}}}},scales:{x:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}}}};
+const noLeg={...defs,plugins:{...defs.plugins,legend:{display:false}}};
+
+function sw(id){
+  document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('p-'+id).classList.add('on');
+  event.target.classList.add('on');
+  if(id==='cons'&&!window._consDone)initCons();
+  if(id==='proj'&&!window._projDone)initProj();
+  if(id==='det'&&!window._detDone)initDet();
+  if(id==='act'&&!window._actDone)initAct();
+}
+
+function init(){
+  // Overview: Consultant comparison
+  const cNames=['N.Rebolledo','K.Papic','B.Hasbun','V.Puig','F.Aguirre','V.Lopez','JF.Lopez','A.Reyes','D.Lopez','R.Franco','M.Garreaud'];
+  const cBud=[21,21,19.2,12.8,8,0,25.8,20,19.5,10.7,4.3];
+  const cReal=[161,136,120,109,96,48,0,0,0,0,0];
+  new Chart(document.getElementById('cConsComp'),{type:'bar',data:{labels:cNames,datasets:[
+    {label:'Real',data:cReal,backgroundColor:cReal.map((v,i)=>v>0?'rgba(124,107,240,.6)':'rgba(251,191,36,.3)'),borderColor:cReal.map((v,i)=>v>0?'#7c6bf0':'#fbbf24'),borderWidth:1,borderRadius:4},
+    {label:'Presupuesto',data:cBud,backgroundColor:'rgba(96,165,250,.3)',borderColor:'#60a5fa',borderWidth:1,borderRadius:4}
+  ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'h'}}}}});
+
+  // Activity pie
+  new Chart(document.getElementById('cActPie'),{type:'doughnut',data:{labels:['Ejecucion Proyectos','Marketing/RRPP','Desarrollo Interno','Vacaciones/Feriados','Preventa'],datasets:[{data:[331,147,100,80,12],backgroundColor:['#7c6bf0','#fbbf24','#60a5fa','#f472b6','#34d399'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8890b0',font:{size:10},padding:10}}}}});
+}
+
+function initCons(){
+  window._consDone=true;
+  const names=['N.Rebolledo','K.Papic','B.Hasbun','V.Puig','F.Aguirre','V.Lopez'];
+  const bud=[21,21,19.2,12.8,8,0];
+  const real=[161,136,120,109,96,48];
+  new Chart(document.getElementById('cConsBar'),{type:'bar',data:{labels:names,datasets:[
+    {label:'Horas Reales',data:real,backgroundColor:'rgba(124,107,240,.6)',borderColor:'#7c6bf0',borderWidth:1,borderRadius:6},
+    {label:'Presupuesto',data:bud,backgroundColor:'rgba(52,211,153,.4)',borderColor:'#34d399',borderWidth:1,borderRadius:6}
+  ]},options:{...defs,scales:{...defs.scales,y:{...defs.scales.y,ticks:{...defs.scales.y.ticks,callback:v=>v+'h'}}}}});
+
+  // Cost chart
+  const costNames=['N.Rebolledo','K.Papic','B.Hasbun','V.Puig','F.Aguirre','V.Lopez'];
+  const costs=[4961,4920,2327,2102,1569,1053];
+  new Chart(document.getElementById('cConsCost'),{type:'bar',data:{labels:costNames,datasets:[{data:costs,backgroundColor:['#7c6bf0','#a99ff5','#60a5fa','#34d399','#fbbf24','#f472b6'],borderRadius:6}]},options:{...noLeg,indexAxis:'y',scales:{x:{ticks:{color:'#8890b0',callback:v=>'$'+v+'K'},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:11}},grid:{display:false}}}}});
+}
+
+function initProj(){
+  window._projDone=true;
+  // Billable projects bar
+  const pNames=['RDom.\nBloomberg','Storytelling\nUSA','Renca\nBloomberg','OIC\nSan Fco','Utopias\nCDMX','Bloomberg\nIV','Ventas','CAF\nSmartcities'];
+  const pReal=[202,40,24,20,20,14,12,11];
+  const pColors=['#7c6bf0','#a99ff5','#60a5fa','#34d399','#fbbf24','#f472b6','#2dd4bf','#c084fc'];
+  new Chart(document.getElementById('cProjBar'),{type:'bar',data:{labels:pNames,datasets:[{data:pReal,backgroundColor:pColors,borderRadius:6}]},options:{...noLeg,scales:{...noLeg.scales,y:{...noLeg.scales.y,ticks:{...noLeg.scales.y.ticks,callback:v=>v+'h'}}}}});
+
+  // Project comparison: Real vs Budget
+  const pcNames=['OIC SFCO','Utopias','Storytelling','Mktg/DP','Estrategia','Ventas','RRPP','RDom.Bloom','Renca','Bloom.IV','CAF'];
+  const pcBud=[64,52.2,39.7,6,6,15,1.5,0,0,0,0];
+  const pcReal=[20,20,40,135,30,12,12,202,24,14,11];
+  new Chart(document.getElementById('cProjComp'),{type:'bar',data:{labels:pcNames,datasets:[
+    {label:'Real',data:pcReal,backgroundColor:'rgba(124,107,240,.6)',borderColor:'#7c6bf0',borderWidth:1,borderRadius:4},
+    {label:'Presupuesto',data:pcBud,backgroundColor:'rgba(52,211,153,.4)',borderColor:'#34d399',borderWidth:1,borderRadius:4}
+  ]},options:{...defs,indexAxis:'y',scales:{x:{ticks:{color:'#8890b0',callback:v=>v+'h'},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{display:false}}}}});
+}
+
+function initDet(){
+  window._detDone=true;
+  // Top combinations as horizontal bar
+  const combos=['B.Hasbun / RDom.Bloom.','V.Puig / RDom.Bloom.','V.Lopez / Mktg','V.Puig / Mktg','N.Rebolledo / Vacac.','K.Papic / RDom.Bloom.','K.Papic / Admin Fin.','F.Aguirre / Mktg','F.Aguirre / Vacac.','F.Aguirre / Storytelling','F.Aguirre / Renca','N.Rebolledo / Estrategia','K.Papic / Gestion','N.Rebolledo / Gestion','K.Papic / Feriados','N.Rebolledo / Mktg','N.Rebolledo / Bloom.IV','K.Papic / Utopias','N.Rebolledo / OIC','N.Rebolledo / Storytelling'];
+  const comboHrs=[120,50,48,48,40,32,32,24,24,24,24,22,16,16,16,15,14,12,12,12];
+  const comboColors=comboHrs.map(v=>{
+    if(v>=50)return 'rgba(248,113,113,.6)';
+    if(v>=24)return 'rgba(251,191,36,.5)';
+    return 'rgba(96,165,250,.4)';
+  });
+  new Chart(document.getElementById('cHeat'),{type:'bar',data:{labels:combos,datasets:[{data:comboHrs,backgroundColor:comboColors,borderRadius:4}]},options:{...noLeg,indexAxis:'y',scales:{x:{ticks:{color:'#8890b0',callback:v=>v+'h'},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:9}},grid:{display:false}}}}});
+}
+
+function initAct(){
+  window._actDone=true;
+  // Activity stacked bar by consultant
+  const actCons=['N.Rebolledo','K.Papic','B.Hasbun','V.Puig','F.Aguirre','V.Lopez'];
+  new Chart(document.getElementById('cActBar'),{type:'bar',data:{labels:actCons,datasets:[
+    {label:'Ejecucion Proy.',data:[46,68,120,61,48,0],backgroundColor:'rgba(124,107,240,.6)',borderRadius:2},
+    {label:'Marketing/RRPP',data:[27,0,0,48,24,48],backgroundColor:'rgba(251,191,36,.5)',borderRadius:2},
+    {label:'Desarrollo Int.',data:[44,56,0,0,0,0],backgroundColor:'rgba(96,165,250,.5)',borderRadius:2},
+    {label:'Vacaciones',data:[40,16,0,0,24,0],backgroundColor:'rgba(244,114,182,.4)',borderRadius:2},
+    {label:'Preventa',data:[4,8,0,0,0,0],backgroundColor:'rgba(52,211,153,.4)',borderRadius:2}
+  ]},options:{...defs,scales:{...defs.scales,x:{...defs.scales.x,stacked:true},y:{...defs.scales.y,stacked:true,ticks:{...defs.scales.y.ticks,callback:v=>v+'h'}}}}});
+
+  // Billable pie
+  new Chart(document.getElementById('cBillPie'),{type:'doughnut',data:{labels:['Billable (Proyectos)','No Billable (Mktg+Interno)','Preventa','No Productivo (Vacac.)'],datasets:[{data:[331,247,12,80],backgroundColor:['#7c6bf0','#fbbf24','#34d399','#f472b6'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{color:'#8890b0',font:{size:10},padding:10}}}}});
+}
+
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
