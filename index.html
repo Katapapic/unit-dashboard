@@ -82,6 +82,34 @@ tr:hover td{background:rgba(124,107,240,.04)}
 .rm-q{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .rm-txt{font-size:12px;color:var(--t2);line-height:1.5}
 .rm-txt strong{color:var(--t1)}
+.hlth-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.hlth-card{background:var(--s1);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.hlth-hdr{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.hlth-hdr-left{display:flex;align-items:center;gap:12px}
+.hlth-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.hlth-title{font-size:14px;font-weight:700}
+.hlth-sub{font-size:11px;color:var(--t2);margin-top:2px}
+.hlth-score{font-size:20px;font-weight:700;text-align:right}
+.hlth-score-lbl{font-size:9px;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;text-align:right}
+.hlth-body{padding:18px 20px}
+.hlth-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(44,51,80,.3);font-size:12px}
+.hlth-row:last-child{border-bottom:none}
+.hlth-row-left{display:flex;align-items:center;gap:10px}
+.sem{width:12px;height:12px;border-radius:50%;flex-shrink:0;box-shadow:0 0 6px}
+.sem-g{background:var(--g);box-shadow:0 0 8px rgba(52,211,153,.5)}
+.sem-y{background:var(--o);box-shadow:0 0 8px rgba(251,191,36,.5)}
+.sem-r{background:var(--r);box-shadow:0 0 8px rgba(248,113,113,.5)}
+.hlth-lbl{color:var(--t2)}
+.hlth-val{font-weight:600;min-width:70px;text-align:right}
+.hlth-ref{font-size:10px;color:var(--t3);text-align:right;min-width:100px;margin-left:8px}
+.hlth-summary{background:var(--s1);border:1px solid var(--bd);border-radius:14px;padding:24px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:40px}
+.hlth-gauge{text-align:center}
+.hlth-gauge-val{font-size:48px;font-weight:700}
+.hlth-gauge-lbl{font-size:11px;color:var(--t2);margin-top:4px}
+.hlth-gauge-bar{width:200px;height:12px;background:linear-gradient(90deg,var(--r),var(--o),var(--g));border-radius:6px;margin:10px auto 0;position:relative}
+.hlth-gauge-ptr{position:absolute;top:-4px;width:4px;height:20px;background:var(--t1);border-radius:2px}
+.hlth-legend{display:flex;gap:16px;justify-content:center;margin-top:12px}
+.hlth-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--t2)}
 @media(max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.g2,.g3{grid-template-columns:1fr}.wrap{padding:16px 20px}}
 </style>
 </head>
@@ -108,6 +136,7 @@ tr:hover td{background:rgba(124,107,240,.04)}
   <button class="tab" onclick="sw('pnl')">P&L Detallado</button>
   <button class="tab" onclick="sw('ins')">Insights</button>
   <button class="tab" onclick="sw('str')">Estrategia 2026</button>
+  <button class="tab" onclick="sw('hlth')">Salud Financiera</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -226,6 +255,264 @@ tr:hover td{background:rgba(124,107,240,.04)}
   </table>
   </div>
 </div>
+</div>
+
+<!-- SALUD FINANCIERA -->
+<div id="p-hlth" class="pnl">
+
+<!-- Score General -->
+<div class="hlth-summary">
+  <div class="hlth-gauge">
+    <div class="hlth-gauge-lbl">SCORE SALUD FINANCIERA FY25</div>
+    <div class="hlth-gauge-val" style="color:var(--g)">78/100</div>
+    <div class="hlth-gauge-bar"><div class="hlth-gauge-ptr" style="left:76%"></div></div>
+    <div class="hlth-legend">
+      <div class="hlth-legend-item"><div class="sem sem-r"></div>Critico (0-40)</div>
+      <div class="hlth-legend-item"><div class="sem sem-y"></div>Precaucion (40-70)</div>
+      <div class="hlth-legend-item"><div class="sem sem-g"></div>Saludable (70-100)</div>
+    </div>
+  </div>
+  <div style="text-align:left;max-width:400px">
+    <div style="font-size:13px;font-weight:600;margin-bottom:8px">Resumen Ejecutivo</div>
+    <div style="font-size:12px;color:var(--t2);line-height:1.6">UNIT muestra solida generacion de utilidades y excelente control de gastos administrativos. Los puntos de atencion son la compresion del margen de contribucion, alta estacionalidad y exposicion cambiaria sin cobertura.</div>
+  </div>
+</div>
+
+<!-- Indicadores Grid -->
+<div class="hlth-grid">
+
+  <!-- RENTABILIDAD -->
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--gd);color:var(--g)">&#9650;</div>
+        <div><div class="hlth-title">Rentabilidad</div><div class="hlth-sub">Capacidad de generar utilidades</div></div>
+      </div>
+      <div><div class="hlth-score" style="color:var(--g)">85</div><div class="hlth-score-lbl">Score</div></div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Bruto (Contribucion)</div></div>
+        <div class="hlth-val">40.4%</div>
+        <div class="hlth-ref" style="color:var(--o)">Meta: >45%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen EBITDA</div></div>
+        <div class="hlth-val">24.0%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: >20%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Neto</div></div>
+        <div class="hlth-val">19.3%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: >15%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Crecimiento Ingresos YoY</div></div>
+        <div class="hlth-val" style="color:var(--g)">+79.5%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: >15%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Crecimiento EBITDA YoY</div></div>
+        <div class="hlth-val" style="color:var(--g)">+65.9%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: >10%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Retorno s/ Ingresos (ROS)</div></div>
+        <div class="hlth-val">19.3%</div>
+        <div class="hlth-ref" style="color:var(--g)">Ind: 10-15%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EFICIENCIA OPERACIONAL -->
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--od);color:var(--o)">&#9881;</div>
+        <div><div class="hlth-title">Eficiencia Operacional</div><div class="hlth-sub">Optimizacion de recursos</div></div>
+      </div>
+      <div><div class="hlth-score" style="color:var(--g)">74</div><div class="hlth-score-lbl">Score</div></div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Costos Directos / Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--o)">59.6%</div>
+        <div class="hlth-ref" style="color:var(--o)">Meta: <55%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">GAV / Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--g)">10.9%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: <15%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Apalancamiento Operativo</div></div>
+        <div class="hlth-val" style="color:var(--g)">3.3x</div>
+        <div class="hlth-ref" style="color:var(--g)">EBITDA crec / Ing crec</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Terceros / Costos Directos</div></div>
+        <div class="hlth-val" style="color:var(--o)">18.4%</div>
+        <div class="hlth-ref" style="color:var(--o)">Meta: <10%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Viajes / Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--o)">8.9%</div>
+        <div class="hlth-ref" style="color:var(--o)">Meta: <6%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Inversion / Ingresos</div></div>
+        <div class="hlth-val">3.7%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: 3-8%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIQUIDEZ / GENERACION DE CAJA -->
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:var(--bd2);color:var(--b)">&#9679;</div>
+        <div><div class="hlth-title">Liquidez y Generacion de Caja</div><div class="hlth-sub">Capacidad de cubrir obligaciones</div></div>
+      </div>
+      <div><div class="hlth-score" style="color:var(--g)">76</div><div class="hlth-score-lbl">Score</div></div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA Anual</div></div>
+        <div class="hlth-val" style="color:var(--g)">$343M</div>
+        <div class="hlth-ref" style="color:var(--g)">Generacion solida</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Cobertura de Intereses</div></div>
+        <div class="hlth-val" style="color:var(--g)">11.7x</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: >3x</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">EBITDA / Costos Fijos</div></div>
+        <div class="hlth-val" style="color:var(--g)">1.65x</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: >1.2x</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-r"></div><div class="hlth-lbl">Meses con EBITDA Negativo</div></div>
+        <div class="hlth-val" style="color:var(--r)">4 de 12</div>
+        <div class="hlth-ref" style="color:var(--r)">Meta: 0</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Volatilidad EBITDA Trimestral</div></div>
+        <div class="hlth-val" style="color:var(--o)">Alta</div>
+        <div class="hlth-ref" style="color:var(--o)">Q2:$214M vs Q3:$10M</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Utilidad Neta / EBITDA</div></div>
+        <div class="hlth-val">80.3%</div>
+        <div class="hlth-ref" style="color:var(--g)">Alta conversion</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENDEUDAMIENTO Y CARGA FINANCIERA -->
+  <div class="hlth-card">
+    <div class="hlth-hdr">
+      <div class="hlth-hdr-left">
+        <div class="hlth-icon" style="background:rgba(192,132,252,.12);color:var(--p)">&#9878;</div>
+        <div><div class="hlth-title">Endeudamiento y Carga Financiera</div><div class="hlth-sub">Exposicion a deuda y costos financieros</div></div>
+      </div>
+      <div><div class="hlth-score" style="color:var(--g)">82</div><div class="hlth-score-lbl">Score</div></div>
+    </div>
+    <div class="hlth-body">
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Gastos Financieros / Ingresos</div></div>
+        <div class="hlth-val" style="color:var(--g)">2.1%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: <5%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Intereses / EBITDA</div></div>
+        <div class="hlth-val" style="color:var(--g)">8.6%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: <25%</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-y"></div><div class="hlth-lbl">Perdida Dif. Cambio / EBITDA</div></div>
+        <div class="hlth-val" style="color:var(--o)">8.7%</div>
+        <div class="hlth-ref" style="color:var(--o)">$30M perdida FX</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Carga Tributaria Efectiva</div></div>
+        <div class="hlth-val">11.0%</div>
+        <div class="hlth-ref" style="color:var(--g)">Imp Renta / EBITDA</div>
+      </div>
+      <div class="hlth-row">
+        <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">IIDA / EBITDA</div></div>
+        <div class="hlth-val">19.7%</div>
+        <div class="hlth-ref" style="color:var(--g)">Meta: <30%</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PUNTO DE EQUILIBRIO -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--pk)"></span>Punto de Equilibrio (Break-Even Analysis) FY25</div>
+  <div class="g2" style="margin-bottom:0">
+    <div>
+      <div class="hlth-body" style="padding:0">
+        <div class="hlth-row">
+          <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Costos Fijos Anuales</div></div>
+          <div class="hlth-val">$207M</div>
+          <div class="hlth-ref">GAV + Inversion</div>
+        </div>
+        <div class="hlth-row">
+          <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Costos Variables / Ingreso</div></div>
+          <div class="hlth-val">59.6%</div>
+          <div class="hlth-ref">Costos directos</div>
+        </div>
+        <div class="hlth-row">
+          <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen Contribucion Unitario</div></div>
+          <div class="hlth-val">40.4%</div>
+          <div class="hlth-ref">1 - CV/Ing</div>
+        </div>
+        <div class="hlth-row">
+          <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Punto de Equilibrio</div></div>
+          <div class="hlth-val" style="color:var(--acc2);font-size:16px">$513M</div>
+          <div class="hlth-ref">CF / MC%</div>
+        </div>
+        <div class="hlth-row">
+          <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Margen de Seguridad</div></div>
+          <div class="hlth-val" style="color:var(--g)">64.1%</div>
+          <div class="hlth-ref">(Ing - PE) / Ing</div>
+        </div>
+        <div class="hlth-row">
+          <div class="hlth-row-left"><div class="sem sem-g"></div><div class="hlth-lbl">Ingreso Mensual p/ Break-Even</div></div>
+          <div class="hlth-val">$42.7M</div>
+          <div class="hlth-ref">PE / 12</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="ch-t"><canvas id="cBreakeven"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- Tendencia Historica de Salud -->
+<div class="card fw">
+  <div class="card-t"><span class="dot" style="background:var(--tl)"></span>Evolucion Indicadores de Salud (FY20-FY25)</div>
+  <div class="tbl-s">
+  <table>
+    <thead><tr><th>Indicador</th><th>Rango Saludable</th><th class="r">FY20</th><th class="r">FY21</th><th class="r">FY22</th><th class="r">FY23</th><th class="r">FY24</th><th class="r">FY25</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td class="nm">Margen EBITDA</td><td style="color:var(--t2)">+20%</td><td class="r" style="color:var(--r)">-18%</td><td class="r" style="color:var(--o)">13%</td><td class="r" style="color:var(--r)">-60%</td><td class="r" style="color:var(--r)">0%</td><td class="r" style="color:var(--g)">26%</td><td class="r" style="color:var(--g);font-weight:700">24%</td><td><span class="pill pill-g">Saludable</span></td></tr>
+      <tr><td class="nm">Margen Neto</td><td style="color:var(--t2)">>15%</td><td class="r" style="color:var(--r)">-17%</td><td class="r" style="color:var(--o)">12%</td><td class="r" style="color:var(--r)">-68%</td><td class="r" style="color:var(--r)">0%</td><td class="r" style="color:var(--g)">21%</td><td class="r" style="color:var(--g);font-weight:700">19%</td><td><span class="pill pill-g">Saludable</span></td></tr>
+      <tr><td class="nm">Margen Contribucion</td><td style="color:var(--t2)">>45%</td><td class="r" style="color:var(--r)">14%</td><td class="r" style="color:var(--o)">26%</td><td class="r" style="color:var(--r)">-26%</td><td class="r" style="color:var(--o)">37%</td><td class="r" style="color:var(--g)">54%</td><td class="r" style="color:var(--o);font-weight:700">40%</td><td><span class="pill pill-o">Precaucion</span></td></tr>
+      <tr><td class="nm">GAV / Ingresos</td><td style="color:var(--t2)"><15%</td><td class="r" style="color:var(--r)">32%</td><td class="r" style="color:var(--g)">12%</td><td class="r" style="color:var(--r)">35%</td><td class="r" style="color:var(--r)">56%</td><td class="r" style="color:var(--r)">28%</td><td class="r" style="color:var(--g);font-weight:700">11%</td><td><span class="pill pill-g">Saludable</span></td></tr>
+      <tr><td class="nm">Costos Dir. / Ingresos</td><td style="color:var(--t2)"><55%</td><td class="r" style="color:var(--r)">86%</td><td class="r" style="color:var(--r)">74%</td><td class="r" style="color:var(--r)">126%</td><td class="r" style="color:var(--r)">63%</td><td class="r" style="color:var(--g)">46%</td><td class="r" style="color:var(--o);font-weight:700">60%</td><td><span class="pill pill-o">Precaucion</span></td></tr>
+      <tr><td class="nm">Crecimiento YoY</td><td style="color:var(--t2)">>15%</td><td class="r">-</td><td class="r" style="color:var(--g)">+459%</td><td class="r" style="color:var(--r)">-41%</td><td class="r" style="color:var(--o)">+9%</td><td class="r" style="color:var(--g)">+24%</td><td class="r" style="color:var(--g);font-weight:700">+80%</td><td><span class="pill pill-g">Saludable</span></td></tr>
+      <tr><td class="nm">Margen Seguridad (PE)</td><td style="color:var(--t2)">>30%</td><td class="r" style="color:var(--r)">-</td><td class="r" style="color:var(--o)">-</td><td class="r" style="color:var(--r)">-</td><td class="r" style="color:var(--r)">-</td><td class="r" style="color:var(--g)">47%</td><td class="r" style="color:var(--g);font-weight:700">64%</td><td><span class="pill pill-g">Saludable</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
 </div>
 
 <!-- ESTRATEGIA 2026 -->
@@ -426,7 +713,7 @@ const gavVals=[25,23,11,31,11,26,18,10];
 const defs={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#8890b0',font:{size:10}}}},scales:{x:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}},y:{ticks:{color:'#8890b0',font:{size:10}},grid:{color:'rgba(44,51,80,.3)'}}}};
 const noLeg={...defs,plugins:{...defs.plugins,legend:{display:false}}};
 
-function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj()}
+function sw(id){document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');event.target.classList.add('on');if(id==='str'&&!window._projDone)initProj();if(id==='hlth'&&!window._hlthDone)initHlth()}
 
 function init(){
   // Revenue bar
@@ -529,6 +816,18 @@ function buildQtr(){
     html+=`<td class="r" style="color:var(--t2)">${(r.pfy*100).toFixed(0)}%</td>`;
     tr.innerHTML=html;tb.appendChild(tr);
   });
+}
+
+function initHlth(){
+  window._hlthDone=true;
+  // Break-even chart
+  const beX=[];const ingLine=[];const ctLine=[];const cfLine=[];
+  for(let i=0;i<=2000;i+=100){beX.push(i);ingLine.push(i);ctLine.push(207+i*0.596);cfLine.push(207);}
+  new Chart(document.getElementById('cBreakeven'),{type:'line',data:{labels:beX,datasets:[
+    {label:'Ingresos',data:ingLine,borderColor:'#7c6bf0',borderWidth:2,pointRadius:0,tension:0},
+    {label:'Costos Totales',data:ctLine,borderColor:'#f87171',borderWidth:2,pointRadius:0,tension:0},
+    {label:'Costos Fijos',data:cfLine,borderColor:'#fbbf24',borderWidth:1,borderDash:[5,5],pointRadius:0,tension:0}
+  ]},options:{...defs,plugins:{...defs.plugins,legend:{labels:{color:'#8890b0',font:{size:10}}},annotation:{annotations:{breakeven:{type:'line',xMin:513,xMax:513,borderColor:'rgba(169,159,245,.5)',borderWidth:2,borderDash:[4,4],label:{display:true,content:'PE $513M',color:'#a99ff5',font:{size:10},position:'start'}}}}},scales:{x:{title:{display:true,text:'Ingresos (CLP M)',color:'#8890b0',font:{size:10}},ticks:{color:'#8890b0',font:{size:9},callback:function(v,i){return i%5===0?beX[i]+'M':''}},grid:{color:'rgba(44,51,80,.3)'}},y:{title:{display:true,text:'CLP Millones',color:'#8890b0',font:{size:10}},ticks:{color:'#8890b0',font:{size:9},callback:v=>v+'M'},grid:{color:'rgba(44,51,80,.3)'}}}}});
 }
 
 function initProj(){
